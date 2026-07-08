@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>enot - an earthy colorscheme that survives color blindness</title>
-<meta name="description" content="Warm gruvbox-family looks, built in CIELAB, optimized so every pair of colors stays distinguishable under protanopia and deuteranopia. Dark and light. vim, WezTerm, Midnight Commander and ranger.">
-<link rel="canonical" href="https://enot-theme.github.io/site/">
-<meta property="og:title" content="enot - an earthy colorscheme that survives color blindness">
-<meta property="og:description" content="Warm gruvbox-family looks, built in CIELAB, optimized so every pair of colors stays distinguishable under protanopia and deuteranopia. Dark and light. vim, WezTerm, Midnight Commander and ranger.">
-<meta property="og:url" content="https://enot-theme.github.io/site/">
+<title>enot for Midnight Commander</title>
+<meta name="description" content="Install the enot colorscheme in Midnight Commander.">
+<link rel="canonical" href="https://enot-theme.github.io/site/mc.html">
+<meta property="og:title" content="enot for Midnight Commander">
+<meta property="og:description" content="Install the enot colorscheme in Midnight Commander.">
+<meta property="og:url" content="https://enot-theme.github.io/site/mc.html">
 <link rel="icon" href="data:image/svg+xml,<svg width='64' height='64' viewBox='0 0 64 64' role='img'  aria-label='enot raccoon logo' fill='none'> <path d='M10 24 L4 8 L22 13 Z' fill='%2345423c'/> <path d='M54 24 L60 8 L42 13 Z' fill='%2345423c'/> <path d='M32 8 C14 8 6 22 6 36 C6 50 17 58 32 58 C47 58 58 50 58 36  C58 22 50 8 32 8 Z' stroke='%2345423c' stroke-width='3.5'/> <path d='M7 28 C15 24 24 23 32 23 C40 23 49 24 57 28 C57 36 52 42 44 42  C38 42 34 39 32 36 C30 39 26 42 20 42 C12 42 7 36 7 28 Z'  fill='%2345423c'/> <circle cx='21' cy='32' r='3.4' fill='%23f4f2ee'/> <circle cx='43' cy='32' r='3.4' fill='%23f4f2ee'/> <path d='M28 47 L36 47 L32 52 Z' fill='%2345423c'/> </svg>">
 <style>:root { --bg0: #292826; --bg1: #323130; --bg2: #3e3d3c; --bg3: #4e4d4c; --fg0: #e2d7b5; --fg1: #beb69c; --comment: #83817e; --linenr: #5f5e5c; --red: #daa3a2; --orange: #b28e7d; --yellow: #ae925d; --green: #bbb97d; --aqua: #78d0c2; --blue: #65b7c6; --purple: #cb87a2; --gruv0: #fb4934; --gruv1: #fe8019; --gruv2: #fabd2f; --gruv3: #b8bb26; --gruv4: #8ec07c; --gruv5: #83a598; --gruv6: #d3869b }
 :root { color-scheme: dark light; }
@@ -214,20 +214,8 @@ footer .wrap { display: grid; gap: 8px; }
 <path d="M28 47 L36 47 L32 52 Z" fill="currentColor"/>
 </svg><b>enot</b></a><nav><a href="index.html#why">why</a><a href="index.html#numbers">numbers</a><a href="index.html#method">method</a><a href="index.html#science">science</a><a href="index.html#get">get it</a></nav></header>
 <div class="hero wrap">
-  <h1>enot</h1>
+  <h1>enot for Midnight Commander</h1>
   <div class="tail" aria-hidden="true"><i style="background:var(--red)"></i><i style="background:var(--orange)"></i><i style="background:var(--yellow)"></i><i style="background:var(--green)"></i><i style="background:var(--aqua)"></i><i style="background:var(--blue)"></i><i style="background:var(--purple)"></i></div>
-  <p class="tagline">An earthy colorscheme that survives color blindness.</p>
-  <p class="sub">Warm gruvbox-family looks, built in CIELAB and optimized so
-  every pair of colors stays apart under protanopia and deuteranopia -
-  the red-green vision deficiencies that affect about 8% of men.
-  Dark and light. No hand-picked colors: everything is generated,
-  optimized and regression-checked.</p>
-  <div class="cta">
-    <a class="btn" href="vim.html">Get it for vim</a>
-    <a class="btn alt" href="wezterm.html">WezTerm</a>
-    <a class="btn alt" href="mc.html">mc</a>
-    <a class="btn alt" href="ranger.html">ranger</a>
-  </div>
   
 <div class="controls">
   <div class="seg" role="group" aria-label="theme">
@@ -243,117 +231,33 @@ footer .wrap { display: grid; gap: 8px; }
   <span class="hint">the whole page re-renders through the selected vision</span>
 </div>
   <div class="editor"><pre><span class="line"><span class="ln">1</span><span class="tok-cm"># accents live in CIELAB, not in guesswork</span></span><span class="line"><span class="ln">2</span><span class="tok-k">from</span> math <span class="tok-k">import</span> cos, sin, radians</span><span class="line"><span class="ln">3</span></span><span class="line"><span class="ln">4</span><span class="tok-k">def</span> <span class="search">lch_to_lab</span>(l, c, h):</span><span class="line"><span class="ln">5</span>    <span class="tok-s">&quot;&quot;&quot;Cylindrical LCh to rectangular Lab.&quot;&quot;&quot;</span></span><span class="line"><span class="ln">6</span>    hr = <span class="tok-c">radians</span>(h)</span><span class="line"><span class="ln">7</span>    <span class="tok-k">return</span> l, <span class="vis">c * <span class="tok-c">cos</span>(hr)</span>, c * <span class="tok-c">sin</span>(hr)</span><span class="line"><span class="ln">8</span></span><span class="line"><span class="ln">9</span><span class="tok-y">GUARDS</span> = {<span class="tok-s">&quot;contrast&quot;</span>: <span class="tok-n">4.5</span>, <span class="tok-s">&quot;delta_e&quot;</span>: <span class="tok-n">8.0</span>}</span><span class="line"><span class="ln">10</span></span><span class="line"><span class="ln">11</span><span class="tok-k">for</span> name, floor <span class="tok-k">in</span> GUARDS.<span class="tok-c">items</span>():</span><span class="line cur"><span class="ln">12</span>    ok = <span class="tok-c">holds</span>(name, <span class="search">lch_to_lab</span>(<span class="tok-n">70.0</span>, <span class="tok-n">26.0</span>, <span class="cursor">h</span>ue))</span><span class="line"><span class="ln">13</span>    <span class="tok-b">print</span>(<span class="tok-s">f&quot;{name}: {ok}&quot;</span>)</span></pre><div class="statusline"><span class="mode">NORMAL</span><span>palette.py</span><span class="grow"></span><span>utf-8</span><span>py</span><span class="tail-seg">12:24</span></div></div>
-  <div class="strip"><button class="sw" data-hex="#daa3a2" title="red"><i style="background:var(--red)"></i>#daa3a2</button><button class="sw" data-hex="#b28e7d" title="orange"><i style="background:var(--orange)"></i>#b28e7d</button><button class="sw" data-hex="#ae925d" title="yellow"><i style="background:var(--yellow)"></i>#ae925d</button><button class="sw" data-hex="#bbb97d" title="green"><i style="background:var(--green)"></i>#bbb97d</button><button class="sw" data-hex="#78d0c2" title="aqua"><i style="background:var(--aqua)"></i>#78d0c2</button><button class="sw" data-hex="#65b7c6" title="blue"><i style="background:var(--blue)"></i>#65b7c6</button><button class="sw" data-hex="#cb87a2" title="purple"><i style="background:var(--purple)"></i>#cb87a2</button></div>
-  <p class="caption">Swatches and the editor are rendered through the
-  selected vision; the hex values are the real colors - click to copy.</p>
 </div>
-
-<section id="why"><div class="wrap">
-  <h2>most warm themes collapse</h2>
-  <p class="lead">Warm themes encode meaning almost purely by hue.
-  Dichromacy projects the color plane onto a single axis, folding red,
-  orange, yellow and green into one ochre band. Switch the vision above
-  to deuteranopia and compare:</p>
-  <div class="compare">
-    <div><h3>gruvbox accents</h3><div class="strip small"><span class="sw"><i style="background:var(--gruv0)"></i></span><span class="sw"><i style="background:var(--gruv1)"></i></span><span class="sw"><i style="background:var(--gruv2)"></i></span><span class="sw"><i style="background:var(--gruv3)"></i></span><span class="sw"><i style="background:var(--gruv4)"></i></span><span class="sw"><i style="background:var(--gruv5)"></i></span><span class="sw"><i style="background:var(--gruv6)"></i></span></div></div>
-    <div><h3>enot accents</h3><div class="strip small"><span class="sw"><i style="background:var(--red)"></i></span><span class="sw"><i style="background:var(--orange)"></i></span><span class="sw"><i style="background:var(--yellow)"></i></span><span class="sw"><i style="background:var(--green)"></i></span><span class="sw"><i style="background:var(--aqua)"></i></span><span class="sw"><i style="background:var(--blue)"></i></span><span class="sw"><i style="background:var(--purple)"></i></span></div></div>
-  </div>
-  <p class="caption">enot's optimizer maximizes the minimum pairwise
-  CIEDE2000 distance across normal vision, protanopia and deuteranopia,
-  and spreads colors along the lightness axis - the one axis dichromacy
-  never touches. The colors cannot collapse.</p>
-</div></section>
-
-<section id="numbers"><div class="wrap">
-  <h2>guarantees, not vibes</h2>
-  <p class="lead">Every value below is computed from the spec and
-  enforced by a regression gate: the build fails if any of them drops.
-  Three color depths, each with its own testable invariants.</p>
-  <div class="cards">
-    <div class="card"><b>&Delta;E00 &ge; 8.3</b><span>between any two
-    syntax accents, worst case across the three simulated visions</span></div>
-    <div class="card"><b>&Delta;E00 &ge; 7.2</b><span>same guarantee
-    for all 16 ANSI terminal colors, both tiers</span></div>
-    <div class="card"><b>&ge; 4.5:1</b><span>WCAG contrast of every accent
-    against the background, at every depth</span></div>
-    <div class="card"><b>3 depths</b><span>true color, xterm-256 and
-    ANSI 16, all derived from one spec: colors.json</span></div>
-  </div>
-  
-  <h3 class="invh">true color - 16M</h3>
-  <div class="invwrap"><table class="inv"><tr><th>invariant</th><th>gate</th><th>dark</th><th>light</th></tr><tr><td>min pairwise ΔE00 across the 7 accents, worst of normal / protanopia / deuteranopia</td><td class="num">&ge; 8.0</td><td class="num">8.31</td><td class="num">8.27</td></tr><tr><td>min pairwise ΔE00 across all 16 ANSI colors</td><td class="num">&ge; 7.0</td><td class="num">7.2</td><td class="num">7.22</td></tr><tr><td>min pairwise ΔE00 across the 4 diff backgrounds</td><td class="num">&ge; 3.0</td><td class="num">3.55</td><td class="num">4.24</td></tr><tr><td>min WCAG contrast over every text-on-background pair of the depth</td><td class="num">&ge; 4.5</td><td class="num">4.65</td><td class="num">4.62</td></tr><tr><td>min ΔE00 from accents to text and comment</td><td class="num">&ge; 10.0</td><td class="num">10.25</td><td class="num">10.45</td></tr><tr><td>the same guard for the normal ANSI tier</td><td class="num">&ge; 10.0</td><td class="num">10.59</td><td class="num">11.16</td></tr><tr><td>the same guard for the bright ANSI tier</td><td class="num">&ge; 6.5</td><td class="num">6.72</td><td class="num">6.54</td></tr><tr><td>chroma of red - diagnostics stay salient</td><td class="num">&ge; 21.5</td><td class="num">21.9</td><td class="num">38.2</td></tr><tr><td>lightness gap between ANSI tiers (the bright tier is darker in the light theme)</td><td class="num">&ge; 2.0</td><td class="num">8.1</td><td class="num">4.0</td></tr></table></div>
-  <h3 class="invh">xterm-256</h3>
-  <p class="lead">The 256-color depth is not naive quantization: the
-  xterm cube is so sparse in the muted earthy region that
-  nearest-color mapping collapses roles to ΔE00 = 0. Instead the same
-  max-min optimizer runs over the xterm grid, anchored to the
-  true-color values (max drift 19.42 / 20.39 ΔE00). The light theme's
-  minimum is the physical ceiling of the grid at 4.5:1 contrast -
-  the true-color variants carry the full guarantee.</p>
-  <div class="invwrap"><table class="inv"><tr><th>invariant</th><th>gate</th><th>dark</th><th>light</th></tr><tr><td>min pairwise ΔE00 across the 7 accents, worst of normal / protanopia / deuteranopia</td><td class="num">&ge; 7.0 (dark) / &ge; 2.0 (light)</td><td class="num">7.31</td><td class="num">2.18</td></tr><tr><td>min pairwise ΔE00 across the 4 diff backgrounds</td><td class="num">&ge; 3.0</td><td class="num">12.46</td><td class="num">3.92</td></tr><tr><td>min WCAG contrast over every text-on-background pair of the depth</td><td class="num">&ge; 4.5</td><td class="num">4.56</td><td class="num">4.65</td></tr><tr><td>min ΔE00 from accents to text and comment</td><td class="num">&ge; 6.5</td><td class="num">8.53</td><td class="num">8.3</td></tr><tr><td>chroma of red - diagnostics stay salient</td><td class="num">&ge; 21.5</td><td class="num">33.3</td><td class="num">64.1</td></tr></table></div>
-  <h3 class="invh">16 - ANSI</h3>
-  <p class="lead">The 16-color depth is the ANSI palette itself,
-  delivered as true color by the terminal scheme and consumed by index
-  (the ranger colorscheme addresses slots 0-15). Its guarantees are the
-  ANSI rows of the 16M table: minimum pairwise ΔE00 of
-  7.2,
-  disjoint lightness tiers, contrast against the background.</p>
-  <p class="caption">The whole spec is data:
-  <a href="colors.json" download>colors.json</a> - roles &times; depths
-  &times; themes with these measured metrics embedded; the regression
-  gate (check.py) fails the build if any number above drops, and every
-  color literal in every generated theme must belong to the spec.</p>
-  <p class="caption" style="margin-top:14px">Tritanopia (about 0.01% of the
-  population) is simulated and reported but not a hard constraint.</p>
-</div></section>
-
-<section id="method"><div class="wrap">
-  <h2>method</h2>
-  <ol class="method">
-    <li>backgrounds and text sit on fixed CIELAB lightness steps;
-    accents are optimization variables;</li>
-    <li>accents are confined to gruvbox hue sectors and a lightness
-    corridor, so the earthy character is a constraint, not an accident;</li>
-    <li>dichromacy is simulated in linear sRGB: Viénot 1999 for protan
-    and deutan, Brettel 1997 for tritan;</li>
-    <li>an optimizer maximizes the minimum pairwise CIEDE2000 across
-    visions: farthest-point seeding, coordinate ascent, multi-start;</li>
-    <li>an aesthetic pass pulls every color back toward its gruvbox
-    anchor while the guarantee holds;</li>
-    <li>a regression gate re-checks all of it on every build.</li>
-  </ol>
-</div></section>
-
-<section id="science"><div class="wrap">
-  <h2>standing on published work</h2>
-  <ul class="refs"><li>Sharma, Wu, Dalal. The CIEDE2000 color-difference formula: implementation notes. Color Research and Application 30(1), 2005. <a href="https://doi.org/10.1002/col.20070">doi.org</a></li><li>Brettel, Viénot, Mollon. Computerized simulation of color appearance for dichromats. JOSA A 14(10), 1997. <a href="https://doi.org/10.1364/JOSAA.14.002647">doi.org</a></li><li>Viénot, Brettel, Mollon. Digital video colourmaps for checking the legibility of displays by dichromats. Color Research and Application 24(4), 1999. <a href="https://doi.org/10.1002/(SICI)1520-6378(199908)24:4%3C243::AID-COL5%3E3.0.CO;2-3">doi.org</a></li><li>Burrus. Review of open source color blindness simulations. 2021. <a href="https://daltonlens.org/opensource-cvd-simulation/">daltonlens.org</a></li><li>Wong. Points of view: color blindness. Nature Methods 8, 441, 2011. <a href="https://doi.org/10.1038/nmeth.1618">doi.org</a></li><li>Petroff. Accessible color sequences for data visualization. 2021. <a href="https://arxiv.org/abs/2107.02270">arxiv.org</a></li><li>Piepenbrock, Mayr, Buchner. Positive display polarity is particularly advantageous for small character sizes. Human Factors 56(5), 2014. <a href="https://doi.org/10.1177/0018720813515509">doi.org</a></li></ul>
-</div></section>
-
-<section id="get"><div class="wrap">
-  <h2>get it</h2>
-  <div class="apps">
-    <a class="app" href="vim.html"><b>vim / neovim</b>
-    <span>one file, both themes, true-color with a computed 256-color
-    fallback, terminal palettes included</span></a>
-    <a class="app" href="wezterm.html"><b>WezTerm</b>
-    <span>two TOML schemes, dark and light, with the optimized
-    ANSI 16 palette</span></a>
-    <a class="app" href="mc.html"><b>Midnight Commander</b>
-    <span>four skins: dark and light, true color plus an xterm-256
-    fallback solved on the grid</span></a>
-    <a class="app" href="ranger.html"><b>ranger</b>
-    <span>one colorscheme for both themes, driven by the terminal
-    ANSI palette</span></a>
-    <span class="app ghost"><b>your app next</b>
-    <span>the palette is data - ports are generated, not hand-made</span></span>
-  </div>
-</div></section>
-
+<section><div class="wrap"><div class="steps">
+<h3>1. download</h3>
+<p><a href="enot-dark-16M.ini" download>enot-dark-16M.ini</a> and
+<a href="enot-light-16M.ini" download>enot-light-16M.ini</a> - true color;
+<a href="enot-dark256.ini" download>enot-dark256.ini</a> and
+<a href="enot-light256.ini" download>enot-light256.ini</a> - the xterm-256
+fallback.</p>
+<h3>2. install</h3>
+<pre class="snippet">mkdir -p ~/.local/share/mc/skins
+cp enot-*.ini ~/.local/share/mc/skins/</pre>
+<h3>3. enable</h3>
+<pre class="snippet">mc -S enot-dark-16M     # or enot-light-16M
+# or permanently: Options &gt; Appearance &gt; enot-dark-16M</pre>
+<h3>notes</h3>
+<p>The -16M skins need mc &ge; 4.8.19 built with S-Lang and a terminal
+that advertises COLORTERM=truecolor. mc does not degrade a skin color
+by color: on a terminal without true color it falls back to the default
+skin entirely - that is what the 256 variants are for. They carry the
+xterm-256 depth of the spec, solved by the same optimizer (see the
+invariants table on the front page). Hotkeys and dialog titles are
+encoded with underline and bold rather than accent colors: shape
+survives any vision.</p>
+</div></div></section>
 <footer><div class="wrap">
-  <span>enot is the Russian word for raccoon: grey fur, a high-contrast
-  mask - neutral backgrounds, distinguishable accents. Read it backwards:
-  tone.</span>
-  <span>Generated from colors.json. No hand-picked colors.</span>
+  <span><a href="index.html">&larr; enot</a> - an earthy colorscheme that
+  survives color blindness.</span>
 </div></footer>
 <script>
 var DATA = {"enot": {"dark": {"normal": {"bg0": "#292826", "bg1": "#323130", "bg2": "#3e3d3c", "bg3": "#4e4d4c", "fg0": "#e2d7b5", "fg1": "#beb69c", "comment": "#83817e", "linenr": "#5f5e5c", "red": "#daa3a2", "orange": "#b28e7d", "yellow": "#ae925d", "green": "#bbb97d", "aqua": "#78d0c2", "blue": "#65b7c6", "purple": "#cb87a2"}, "protanopia": {"bg0": "#282826", "bg1": "#313130", "bg2": "#3d3d3c", "bg3": "#4d4d4c", "fg0": "#d8d8b5", "fg1": "#b7b79c", "comment": "#81817e", "linenr": "#5e5e5c", "red": "#aaaaa2", "orange": "#93937d", "yellow": "#95955d", "green": "#b9b97d", "aqua": "#c9c9c2", "blue": "#b0b0c6", "purple": "#9191a2"}, "deuteranopia": {"bg0": "#282826", "bg1": "#313130", "bg2": "#3d3d3c", "bg3": "#4d4d4c", "fg0": "#dadab5", "fg1": "#b8b89c", "comment": "#82827e", "linenr": "#5e5e5c", "red": "#b5b5a0", "orange": "#9a9a7c", "yellow": "#9b9b5c", "green": "#baba7d", "aqua": "#bcbcc4", "blue": "#a4a4c7", "purple": "#9f9fa0"}, "tritanopia": {"bg0": "#292828", "bg1": "#323131", "bg2": "#3e3d3d", "bg3": "#4e4d4d", "fg0": "#e6d2d4", "fg1": "#c1b2b4", "comment": "#838181", "linenr": "#5f5e5e", "red": "#dba2a8", "orange": "#b48b8f", "yellow": "#b38b8f", "green": "#c2b2b3", "aqua": "#83cae4", "blue": "#69b5cf", "purple": "#c98a91"}}, "light": {"normal": {"bg0": "#f4f2ee", "bg1": "#e7e5e1", "bg2": "#d7d6d2", "bg3": "#c4c2be", "fg0": "#48443e", "fg1": "#64605c", "comment": "#9b9893", "linenr": "#b3b0ab", "red": "#a95359", "orange": "#743d19", "yellow": "#68573d", "green": "#6a6c28", "aqua": "#177657", "blue": "#187886", "purple": "#9a5073"}, "protanopia": {"bg0": "#f2f2ee", "bg1": "#e5e5e1", "bg2": "#d6d6d2", "bg3": "#c2c2be", "fg0": "#44443e", "fg1": "#60605c", "comment": "#989893", "linenr": "#b0b0ab", "red": "#62625a", "orange": "#46461a", "yellow": "#59593d", "green": "#6c6c28", "aqua": "#707057", "blue": "#727286", "purple": "#5c5c73"}, "deuteranopia": {"bg0": "#f3f3ee", "bg1": "#e6e6e1", "bg2": "#d6d6d2", "bg3": "#c3c3be", "fg0": "#45453e", "fg1": "#61615c", "comment": "#999993", "linenr": "#b1b1ab", "red": "#757556", "orange": "#525214", "yellow": "#5c5c3c", "green": "#6b6b28", "aqua": "#656559", "blue": "#676787", "purple": "#6c6c71"}, "tritanopia": {"bg0": "#f5f1f2", "bg1": "#e8e4e5", "bg2": "#d8d5d6", "bg3": "#c5c1c2", "fg0": "#494344", "fg1": "#655f60", "comment": "#9c9798", "linenr": "#b4afb0", "red": "#a9525e", "orange": "#763840", "yellow": "#6b5456", "green": "#706566", "aqua": "#316f82", "blue": "#1f778d", "purple": "#98555d"}}}, "gruvbox": {"dark": {"normal": ["#fb4934", "#fe8019", "#fabd2f", "#b8bb26", "#8ec07c", "#83a598", "#d3869b"], "protanopia": ["#727237", "#96961e", "#c5c531", "#bbbb26", "#bbbb7c", "#a2a298", "#91919b"], "deuteranopia": ["#9b9b20", "#b2b200", "#d1d125", "#baba26", "#b3b37e", "#9c9c99", "#a2a299"], "tritanopia": ["#fd4065", "#ff7589", "#ffb0b9", "#c4afb1", "#9bb7c3", "#88a2ad", "#d28890"]}, "light": {"normal": ["#cc241d", "#d65d0e", "#d79921", "#98971a", "#689d6a", "#458588", "#b16286"], "protanopia": ["#525220", "#737313", "#a2a223", "#97971a", "#98986a", "#808088", "#6f6f86"], "deuteranopia": ["#787800", "#8f8f00", "#aeae14", "#97971a", "#90906c", "#777789", "#808084"], "tritanopia": ["#cd1946", "#d95368", "#de8e97", "#a18d8f", "#7495a3", "#4a8396", "#af676f"]}}};

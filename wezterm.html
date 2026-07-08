@@ -152,6 +152,18 @@ section .lead { color: var(--fg1); max-width: 68ch; margin-bottom: 26px; }
 }
 .card b { font-size: 26px; font-weight: 700; display: block; }
 .card span { font-size: 12.5px; color: var(--fg1); }
+.invh { font-size: 14px; letter-spacing: .1em; margin: 26px 0 4px; }
+.invwrap { overflow-x: auto; }
+.inv { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.inv th, .inv td {
+  text-align: left; padding: 6px 10px;
+  border-bottom: 1px solid var(--bg2); vertical-align: top;
+}
+.inv th { color: var(--fg1); font-weight: 600; }
+.inv td.num {
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+  font-family: ui-monospace, monospace;
+}
 
 ol.method { max-width: 70ch; padding-left: 3ch; }
 ol.method li { margin-bottom: 10px; }
