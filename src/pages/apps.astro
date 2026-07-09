@@ -41,12 +41,12 @@ const KIND_LABEL: Record<string, string> = {
         <tr><th>application</th><th>kind</th><th>depths</th><th>guarantee</th><th>files</th><th>install</th></tr>
         {ports.map((p) => (
           <tr>
-            <td>{p.name}<br /><span style="color:var(--comment);font-size:11px">{p.category}</span></td>
+            <td>{p.name}<br /><span style="color:var(--fg1);font-size:11px">{p.category}</span></td>
             <td>{KIND_LABEL[p.kind] ?? p.kind}</td>
             <td class="num">{p.depth}</td>
             <td><span class={`badge ${p.guarantee === 'ansi' ? 'ansi' : 'full'}`}>{p.guarantee}</span></td>
             <td class="num">{p.outputs.length}</td>
-            <td>{haveInstall.has(p.app) ? <a href={`${base}${p.app}.html`}>{p.app}.html</a> : <span style="color:var(--comment)">-</span>}</td>
+            <td>{haveInstall.has(p.app) ? <a href={`${base}${p.app}.html`}>{p.app}.html</a> : <span style="color:var(--fg1)">-</span>}</td>
           </tr>
         ))}
       </table>
