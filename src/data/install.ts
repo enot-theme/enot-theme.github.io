@@ -1,6 +1,7 @@
 // Install prose per app. The pipeline owns the numbers (site.json);
 // the site owns the words. Keyed by the app slug used in the URL
-// (vim.html, wezterm.html, ...). body is HTML rendered via set:html.
+// (/vim/, /wezterm/, ...). body is HTML rendered via set:html;
+// download hrefs are root-absolute - the files live at the site root.
 export interface Install { app: string; title: string; body: string }
 
 export const INSTALL: Install[] = [
@@ -9,7 +10,7 @@ export const INSTALL: Install[] = [
     title: 'vim / neovim',
     body: `
 <h3>1. download</h3>
-<p><a href="enot.vim" download>enot.vim</a> - one file, both themes.</p>
+<p><a href="/enot.vim" download>enot.vim</a> - one file, both themes.</p>
 <h3>2. install</h3>
 <pre class="snippet">mkdir -p ~/.vim/colors &amp;&amp; cp enot.vim ~/.vim/colors/
 # neovim:
@@ -31,8 +32,8 @@ with the optimized ANSI 16 set.</p>
     title: 'WezTerm',
     body: `
 <h3>1. download</h3>
-<p><a href="enot-dark.toml" download>enot-dark.toml</a> and
-<a href="enot-light.toml" download>enot-light.toml</a>.</p>
+<p><a href="/enot-dark.toml" download>enot-dark.toml</a> and
+<a href="/enot-light.toml" download>enot-light.toml</a>.</p>
 <h3>2. install</h3>
 <pre class="snippet">mkdir -p ~/.config/wezterm/colors
 cp enot-dark.toml enot-light.toml ~/.config/wezterm/colors/</pre>
@@ -69,10 +70,10 @@ families in two disjoint lightness tiers, minimum pairwise
     title: 'Midnight Commander',
     body: `
 <h3>1. download</h3>
-<p><a href="enot-dark-16M.ini" download>enot-dark-16M.ini</a> and
-<a href="enot-light-16M.ini" download>enot-light-16M.ini</a> - true color;
-<a href="enot-dark256.ini" download>enot-dark256.ini</a> and
-<a href="enot-light256.ini" download>enot-light256.ini</a> - the xterm-256
+<p><a href="/enot-dark-16M.ini" download>enot-dark-16M.ini</a> and
+<a href="/enot-light-16M.ini" download>enot-light-16M.ini</a> - true color;
+<a href="/enot-dark256.ini" download>enot-dark256.ini</a> and
+<a href="/enot-light256.ini" download>enot-light256.ini</a> - the xterm-256
 fallback.</p>
 <h3>2. install</h3>
 <pre class="snippet">mkdir -p ~/.local/share/mc/skins
@@ -96,7 +97,7 @@ survives any vision.</p>
     title: 'ranger',
     body: `
 <h3>1. download</h3>
-<p><a href="enot.py" download>enot.py</a> - one file, both themes.</p>
+<p><a href="/enot.py" download>enot.py</a> - one file, both themes.</p>
 <h3>2. install</h3>
 <pre class="snippet">mkdir -p ~/.config/ranger/colorschemes
 cp enot.py ~/.config/ranger/colorschemes/</pre>

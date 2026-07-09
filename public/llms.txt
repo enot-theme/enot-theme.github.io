@@ -14,27 +14,27 @@ gate fails the build if any guarantee drops.
 
 ## Scheme files
 
-- [enot.vim](https://enot-theme.github.io/site/enot.vim): vim/neovim colorscheme, dark and light in one file
-- [enot-dark.toml](https://enot-theme.github.io/site/enot-dark.toml): WezTerm scheme, dark
-- [enot-light.toml](https://enot-theme.github.io/site/enot-light.toml): WezTerm scheme, light
-- [enot-dark-16M.ini](https://enot-theme.github.io/site/enot-dark-16M.ini) and
-  [enot-light-16M.ini](https://enot-theme.github.io/site/enot-light-16M.ini): mc skins, true color
-- [enot-dark256.ini](https://enot-theme.github.io/site/enot-dark256.ini) and
-  [enot-light256.ini](https://enot-theme.github.io/site/enot-light256.ini): mc skins, xterm-256 fallback
-- [enot.py](https://enot-theme.github.io/site/enot.py): ranger colorscheme, both themes via the
+- [enot.vim](https://enot-theme.github.io/enot.vim): vim/neovim colorscheme, dark and light in one file
+- [enot-dark.toml](https://enot-theme.github.io/enot-dark.toml): WezTerm scheme, dark
+- [enot-light.toml](https://enot-theme.github.io/enot-light.toml): WezTerm scheme, light
+- [enot-dark-16M.ini](https://enot-theme.github.io/enot-dark-16M.ini) and
+  [enot-light-16M.ini](https://enot-theme.github.io/enot-light-16M.ini): mc skins, true color
+- [enot-dark256.ini](https://enot-theme.github.io/enot-dark256.ini) and
+  [enot-light256.ini](https://enot-theme.github.io/enot-light256.ini): mc skins, xterm-256 fallback
+- [enot.py](https://enot-theme.github.io/enot.py): ranger colorscheme, both themes via the
   terminal ANSI palette
-- [colors.json](https://enot-theme.github.io/site/colors.json): the color spec - roles at three depths
+- [colors.json](https://enot-theme.github.io/colors.json): the color spec - roles at three depths
   (true color, xterm-256, ANSI 16) with measured invariant metrics
 
 ## Documentation
 
-- [Install for vim / neovim](https://enot-theme.github.io/site/vim.html)
-- [Install for WezTerm](https://enot-theme.github.io/site/wezterm.html)
-- [Install for Midnight Commander](https://enot-theme.github.io/site/mc.html)
-- [Install for ranger](https://enot-theme.github.io/site/ranger.html)
-- [Applications and coverage](https://enot-theme.github.io/site/apps.html)
-- [Homepage with live dichromacy simulation](https://enot-theme.github.io/site/)
+- [Install for vim / neovim](https://enot-theme.github.io/vim/)
+- [Install for WezTerm](https://enot-theme.github.io/wezterm/)
+- [Install for Midnight Commander](https://enot-theme.github.io/mc/)
+- [Install for ranger](https://enot-theme.github.io/ranger/)
+- [Applications and coverage](https://enot-theme.github.io/apps/)
+- [Homepage with live dichromacy simulation](https://enot-theme.github.io/)
 
 ## Optional
 
-- [llms-full.txt](https://enot-theme.github.io/site/llms-full.txt): full documentation and all palette values
+- [llms-full.txt](https://enot-theme.github.io/llms-full.txt): full documentation and all palette values

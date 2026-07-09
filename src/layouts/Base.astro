@@ -19,9 +19,9 @@ let initVars = Object.entries(dark).map(([k, h]) => `--${k}: ${h}`).join('; ');
 initVars += '; ' + gruv.map((h, i) => `--gruv${i}: ${h}`).join('; ');
 
 const nav: [string, string][] = [
-  ['index.html#why', 'why'], ['index.html#numbers', 'numbers'],
-  ['index.html#method', 'method'], ['index.html#science', 'science'],
-  ['apps.html', 'apps'], ['index.html#get', 'get it'],
+  ['#why', 'why'], ['#numbers', 'numbers'],
+  ['#method', 'method'], ['#science', 'science'],
+  ['apps/', 'apps'], ['#get', 'get it'],
 ];
 ---
 <!doctype html>
@@ -56,7 +56,7 @@ const nav: [string, string][] = [
 </head>
 <body>
   <header class="top wrap">
-    <a class="mark" href={`${base}index.html`}><Logo size={34} /><b>enot</b></a>
+    <a class="mark" href={base}><Logo size={34} /><b>enot</b></a>
     <nav>{nav.map(([h, t]) => <a href={`${base}${h}`}>{t}</a>)}</nav>
   </header>
   <slot />

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://enot-theme.github.io/site/sitemap-index.xml
+Sitemap: https://enot-theme.github.io/sitemap-index.xml
