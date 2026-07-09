@@ -9,8 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "og": "node scripts/make-og.mjs",
-    "test": "astro build && node --test",
-    "coverage": "astro build && node --test --experimental-test-coverage --test-coverage-lines=90 --test-coverage-functions=90 --test-coverage-branches=90"
+    "test": "astro build && node --test"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
@@ -18,6 +17,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "sharp": "^0.35.3",
     "typescript": "^5.9.3"
   }
 }

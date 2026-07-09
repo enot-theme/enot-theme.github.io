@@ -1,17 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import Controls from '../components/Controls.astro';
-import { site } from '../lib/site';
+import { site, base } from '../lib/site';
 import { INSTALL } from '../data/install';
 
-const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const accents = site.accents;
 const haveInstall = new Set(INSTALL.map((i) => i.app));
 const ports = site.ports;
-
-const KIND_LABEL: Record<string, string> = {
-  template: 'template', module: 'module', static: 'static',
-};
 ---
 <Base
   title="enot - applications and coverage"
@@ -42,7 +37,7 @@ const KIND_LABEL: Record<string, string> = {
         {ports.map((p) => (
           <tr>
             <td>{p.name}<br /><span style="color:var(--fg1);font-size:11px">{p.category}</span></td>
-            <td>{KIND_LABEL[p.kind] ?? p.kind}</td>
+            <td>{p.kind}</td>
             <td class="num">{p.depth}</td>
             <td><span class={`badge ${p.guarantee === 'ansi' ? 'ansi' : 'full'}`}>{p.guarantee}</span></td>
             <td class="num">{p.outputs.length}</td>

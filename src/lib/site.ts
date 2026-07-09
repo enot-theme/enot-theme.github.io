@@ -5,6 +5,10 @@
 // purpose - roles, depths and modes are looked up by variables.
 import data from '../data/site.json';
 
+// One normalized base for every internal link; '/' while the site lives
+// at the GitHub Pages root, but a future base change stays one-line.
+export const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
 export type Hex = string;
 export type VisionSet = Record<string, Hex>; // role -> hex
 export type ModeVisions = Record<string, VisionSet>; // vision -> set
@@ -37,13 +41,10 @@ export interface Port {
   depth: string;
   guarantee: string;
   outputs: PortOutput[];
-  install?: string;
 }
 
 export interface SiteData {
   slug: string;
-  baseUrl: string;
-  roles: string[];
   accents: string[];
   vision: Vision;
   metrics: Record<string, DepthMetrics>; // mode -> depth -> metrics

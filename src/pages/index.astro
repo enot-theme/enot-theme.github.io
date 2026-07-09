@@ -2,19 +2,18 @@
 import Base from '../layouts/Base.astro';
 import Controls from '../components/Controls.astro';
 import Editor from '../components/Editor.astro';
-import { site } from '../lib/site';
-import { INV_LABELS, guarantee } from '../lib/metrics.mjs';
+import { site, base } from '../lib/site';
+import { INV_LABELS } from '../lib/metrics.mjs';
 
-const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const accents = site.accents;
 const dark = site.vision.enot.dark.normal;
 const metrics = site.metrics;
 
-// Advertised guarantees are floored from the measured metrics, not read
-// from a pre-rounded field: the number under a ">=" must never exceed the
+// Advertised guarantees come from the bundle; the pipeline floors them
+// and the consistency test asserts they never exceed the measured
 // worst case shown in the table below.
-const accentsGuarantee = guarantee(metrics, '16M', 'accents');
-const ansiGuarantee = guarantee(metrics, '16M', 'ansi16');
+const accentsGuarantee = site.numbers.accentsMin;
+const ansiGuarantee = site.numbers.ansiMin;
 
 function invTable(depth: string): string {
   const gates: Record<string, Record<string, number>> = {};

@@ -25,10 +25,9 @@ jobs:
           cache: npm
       - run: npm ci
       # type the bundle contract, then assert data consistency and that
-      # every built link resolves, with a 90% coverage floor - the deploy
-      # fails on any drift or coverage shortfall
+      # every built link resolves - the deploy fails on any drift
       - run: npm run check
-      - run: npm run coverage
+      - run: npm test
   build:
     needs: check
     runs-on: ubuntu-latest

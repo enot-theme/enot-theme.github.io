@@ -1,6 +1,6 @@
-// Shared metric labels and helpers for the invariant tables. Plain JS so
-// the Astro pages and the node test suite import the exact same logic:
-// the number the site advertises and the test that guards it cannot drift.
+// Metric labels for the invariant tables plus the flooring helpers the
+// consistency test uses to re-derive the advertised numbers: the bundle's
+// numbers field and the measured metrics cannot drift apart unnoticed.
 
 // A ">=" guarantee must never round up. Flooring to one decimal keeps the
 // printed value at or below the measured worst case, so the claim on the
