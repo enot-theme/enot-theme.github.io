@@ -28,11 +28,11 @@ gate fails the build if any guarantee drops.
 
 ## Documentation
 
-- [Install for vim / neovim](https://enot-theme.github.io/site/vim)
-- [Install for WezTerm](https://enot-theme.github.io/site/wezterm)
-- [Install for Midnight Commander](https://enot-theme.github.io/site/mc)
-- [Install for ranger](https://enot-theme.github.io/site/ranger)
-- [Applications and coverage](https://enot-theme.github.io/site/apps)
+- [Install for vim / neovim](https://enot-theme.github.io/site/vim.html)
+- [Install for WezTerm](https://enot-theme.github.io/site/wezterm.html)
+- [Install for Midnight Commander](https://enot-theme.github.io/site/mc.html)
+- [Install for ranger](https://enot-theme.github.io/site/ranger.html)
+- [Applications and coverage](https://enot-theme.github.io/site/apps.html)
 - [Homepage with live dichromacy simulation](https://enot-theme.github.io/site/)
 
 ## Optional
