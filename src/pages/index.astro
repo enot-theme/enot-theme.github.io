@@ -3,12 +3,16 @@ import Base from '../layouts/Base.astro';
 import Controls from '../components/Controls.astro';
 import Editor from '../components/Editor.astro';
 import { site, base } from '../lib/site';
+import { orderPorts } from '../data/install';
 
 const accents = site.accents;
 const dark = site.vision.enot.dark.normal;
+const ports = orderPorts(site.ports);
+const names = ports.map((p) => p.name);
+const appList = names.slice(0, -1).join(', ') + ' and ' + names.at(-1);
 
 const title = 'enot - an earthy colorscheme that survives color blindness';
-const desc = 'Warm gruvbox-family looks, built in CIELAB, optimized so every pair of colors stays distinguishable under protanopia and deuteranopia. Dark and light. vim, WezTerm, Midnight Commander, ranger and Telegram Desktop.';
+const desc = `Warm gruvbox-family looks, built in CIELAB, optimized so every pair of colors stays distinguishable under protanopia and deuteranopia. Dark and light. ${appList}.`;
 ---
 <Base title={title} desc={desc}>
   <div class="hero wrap">
@@ -23,11 +27,9 @@ const desc = 'Warm gruvbox-family looks, built in CIELAB, optimized so every pai
         Dark and light. Every color comes out of the optimizer and passes
         a regression gate; none are picked by hand.</p>
         <div class="cta">
-          <a class="btn" href={`${base}vim/`}>Get it for vim</a>
-          <a class="btn alt" href={`${base}wezterm/`}>WezTerm</a>
-          <a class="btn alt" href={`${base}mc/`}>mc</a>
-          <a class="btn alt" href={`${base}ranger/`}>ranger</a>
-          <a class="btn alt" href={`${base}telegram/`}>Telegram</a>
+          {ports.map((p, i) => i === 0
+            ? <a class="btn" href={`${base}${p.app}/`}>Get it for {p.app}</a>
+            : <a class="btn alt" href={`${base}${p.app}/`}>{p.app}</a>)}
         </div>
       </div>
       <img class="hero-art only-dark" src={`${base}mascot-dark.webp`} width="640" height="640" alt="the enot mascot: an anime raccoon face in the theme colors" />

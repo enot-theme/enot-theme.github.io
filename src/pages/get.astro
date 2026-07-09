@@ -2,13 +2,18 @@
 import Base from '../layouts/Base.astro';
 import Controls from '../components/Controls.astro';
 import { site, base } from '../lib/site';
+import { INSTALL, orderPorts } from '../data/install';
 
 const accents = site.accents;
 const h1 = 'get it';
+const ports = orderPorts(site.ports);
+const names = ports.map((p) => p.name);
+const appList = names.slice(0, -1).join(', ') + ' and ' + names.at(-1);
+const blurb = new Map(INSTALL.map((i) => [i.app, i.blurb]));
 ---
 <Base
   title="enot - get it"
-  desc="Install the enot colorscheme: vim/neovim, WezTerm, Midnight Commander, ranger and Telegram Desktop - or add a port for another application."
+  desc={`Install the enot colorscheme: ${appList} - or add a port for another application.`}
   page="get/">
   <div class="hero wrap">
     <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
@@ -22,21 +27,10 @@ const h1 = 'get it';
 
   <section><div class="wrap">
     <div class="apps">
-      <a class="app" href={`${base}vim/`}><b>vim / neovim</b>
-      <span>one file, both themes, true-color with a computed 256-color
-      fallback, terminal palettes included</span></a>
-      <a class="app" href={`${base}wezterm/`}><b>WezTerm</b>
-      <span>two TOML schemes, dark and light, with the optimized
-      ANSI 16 palette</span></a>
-      <a class="app" href={`${base}mc/`}><b>Midnight Commander</b>
-      <span>four skins: dark and light, true color plus an xterm-256
-      fallback solved on the grid</span></a>
-      <a class="app" href={`${base}ranger/`}><b>ranger</b>
-      <span>one colorscheme for both themes, driven by the terminal
-      ANSI palette</span></a>
-      <a class="app" href={`${base}telegram/`}><b>Telegram Desktop</b>
-      <span>two theme files, dark and light: the full palette plus a
-      solid background instead of the wallpaper</span></a>
+      {ports.map((p) => (
+        <a class="app" href={`${base}${p.app}/`}><b>{p.name}</b>
+        <span>{blurb.get(p.app) ?? `${p.depth}, ${p.guarantee} guarantee`}</span></a>
+      ))}
       <a class="app ghost" href={`${base}apps/`}><b>add a port</b>
       <span>a port is a manifest the build renders from colors.json;
       the apps page lists them all and how to add one</span></a>

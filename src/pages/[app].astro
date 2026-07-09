@@ -3,24 +3,36 @@ import Base from '../layouts/Base.astro';
 import Controls from '../components/Controls.astro';
 import Editor from '../components/Editor.astro';
 import { site, base } from '../lib/site';
+import type { Port } from '../lib/site';
 import { INSTALL } from '../data/install';
 
+// One install page per registry port; the site only refines the words.
 export function getStaticPaths() {
-  return INSTALL.map((i) => ({ params: { app: i.app }, props: i }));
+  return site.ports.map((p) => ({ params: { app: p.app }, props: { port: p } }));
 }
 
-const { title, body } = Astro.props;
+interface Props { port: Port }
+const { port } = Astro.props;
 const accents = site.accents;
-const h1 = `enot for ${title}`;
+const h1 = `enot for ${port.name}`;
+const body = INSTALL.find((i) => i.app === port.app)?.body
+  ?? `<h3>2. install</h3><p>${port.install}</p>`;
+const files = port.outputs.map((o) => ({
+  name: o.path.split('/').pop(), theme: o.theme,
+}));
 ---
-<Base title={`enot for ${title}`} desc={`Install the enot colorscheme in ${title}.`} page={`${Astro.params.app}/`}>
+<Base title={h1} desc={`Install the enot colorscheme in ${port.name}.`} page={`${port.app}/`}>
   <div class="hero wrap">
     <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
     <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
     <Controls />
     <Editor />
   </div>
-  <section><div class="wrap"><div class="steps" set:html={body}></div></div></section>
+  <section><div class="wrap"><div class="steps">
+    <h3>1. download</h3>
+    <p>{files.map((f, i) => <>{i > 0 && ', '}<a href={`${base}${f.name}`} download>{f.name}</a>{f.theme && ` - ${f.theme}`}</>)}</p>
+    <Fragment set:html={body} />
+  </div></div></section>
   <footer><div class="wrap">
     <span><a href={base}>&larr; enot</a> - an earthy colorscheme that survives color blindness.</span>
   </div></footer>

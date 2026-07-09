@@ -1,16 +1,26 @@
-// Install prose per app. The pipeline owns the numbers (site.json);
-// the site owns the words. Keyed by the app slug used in the URL
-// (/vim/, /wezterm/, ...). body is HTML rendered via set:html;
-// download hrefs are root-absolute - the files live at the site root.
-export interface Install { app: string; title: string; body: string }
+// Per-app words. Names, download lists and the basic install line come
+// from the port registry (site.json); this file only refines them:
+// blurb is the get-page card line, body is the install page's steps and
+// notes (HTML via set:html; the download section is generated). Array
+// order is the display order of cards and CTA buttons. An app missing
+// here still gets its page and card from the registry alone.
+export interface Install { app: string; blurb: string; body: string }
+
+// Registry ports in display order: INSTALL order first, unknown apps
+// keep their registry order after it.
+export function orderPorts<T extends { app: string }>(ports: T[]): T[] {
+  const order = new Map(INSTALL.map((i, n) => [i.app, n]));
+  return [...ports].sort(
+    (a, b) => (order.get(a.app) ?? INSTALL.length)
+      - (order.get(b.app) ?? INSTALL.length));
+}
 
 export const INSTALL: Install[] = [
   {
     app: 'vim',
-    title: 'vim / neovim',
+    blurb: 'one file, both themes, true-color with a computed 256-color '
+      + 'fallback, terminal palettes included',
     body: `
-<h3>1. download</h3>
-<p><a href="/enot.vim" download>enot.vim</a> - one file, both themes.</p>
 <h3>2. install</h3>
 <pre class="snippet">mkdir -p ~/.vim/colors &amp;&amp; cp enot.vim ~/.vim/colors/
 # neovim:
@@ -29,11 +39,9 @@ with the optimized ANSI 16 set.</p>
   },
   {
     app: 'wezterm',
-    title: 'WezTerm',
+    blurb: 'two TOML schemes, dark and light, with the optimized '
+      + 'ANSI 16 palette',
     body: `
-<h3>1. download</h3>
-<p><a href="/enot-dark.toml" download>enot-dark.toml</a> and
-<a href="/enot-light.toml" download>enot-light.toml</a>.</p>
 <h3>2. install</h3>
 <pre class="snippet">mkdir -p ~/.config/wezterm/colors
 cp enot-dark.toml enot-light.toml ~/.config/wezterm/colors/</pre>
@@ -67,14 +75,9 @@ families in two disjoint lightness tiers, minimum pairwise
   },
   {
     app: 'mc',
-    title: 'Midnight Commander',
+    blurb: 'four skins: dark and light, true color plus an xterm-256 '
+      + 'fallback solved on the grid',
     body: `
-<h3>1. download</h3>
-<p><a href="/enot-dark-16M.ini" download>enot-dark-16M.ini</a> and
-<a href="/enot-light-16M.ini" download>enot-light-16M.ini</a> - true color;
-<a href="/enot-dark256.ini" download>enot-dark256.ini</a> and
-<a href="/enot-light256.ini" download>enot-light256.ini</a> - the xterm-256
-fallback.</p>
 <h3>2. install</h3>
 <pre class="snippet">mkdir -p ~/.local/share/mc/skins
 cp enot-*.ini ~/.local/share/mc/skins/</pre>
@@ -82,23 +85,40 @@ cp enot-*.ini ~/.local/share/mc/skins/</pre>
 <pre class="snippet">mc -S enot-dark-16M     # or enot-light-16M
 # or permanently: Options &gt; Appearance &gt; enot-dark-16M</pre>
 <h3>notes</h3>
-<p>The -16M skins need mc &ge; 4.8.19 built with S-Lang and a terminal
-that advertises COLORTERM=truecolor. mc does not degrade a skin color
-by color: on a terminal without true color it falls back to the default
-skin entirely - that is what the 256 variants are for. They carry the
-xterm-256 depth of the spec, solved by the same optimizer (see the
-invariants tables in <a href="/numbers/">numbers</a>). Hotkeys and
-dialog titles are encoded with underline and bold rather than accent
-colors, so they read the same under any vision.</p>
+<p>The -16M skins are true color and need mc &ge; 4.8.19 built with
+S-Lang and a terminal that advertises COLORTERM=truecolor. mc does not
+degrade a skin color by color: on a terminal without true color it
+falls back to the default skin entirely - that is what the 256 variants
+are for. They carry the xterm-256 depth of the spec, solved by the same
+optimizer (see the invariants tables in <a href="/numbers/">numbers</a>).
+Hotkeys and dialog titles are encoded with underline and bold rather
+than accent colors, so they read the same under any vision.</p>
+`,
+  },
+  {
+    app: 'ranger',
+    blurb: 'one colorscheme for both themes, driven by the terminal '
+      + 'ANSI palette',
+    body: `
+<h3>2. install</h3>
+<pre class="snippet">mkdir -p ~/.config/ranger/colorschemes
+cp enot.py ~/.config/ranger/colorschemes/</pre>
+<h3>3. enable</h3>
+<pre class="snippet"># ~/.config/ranger/rc.conf
+set colorscheme enot</pre>
+<h3>notes</h3>
+<p>The scheme addresses the terminal palette by index (ANSI 0-15 plus
+the terminal default), so one file serves dark and light and follows
+whatever palette the terminal provides. Pair it with the enot WezTerm
+schemes - or any terminal carrying the enot ANSI 16 set - to get the
+guaranteed palette. Requires ranger &ge; 1.9.3.</p>
 `,
   },
   {
     app: 'telegram',
-    title: 'Telegram Desktop',
+    blurb: 'two theme files, dark and light: the full palette plus a '
+      + 'solid background instead of the wallpaper',
     body: `
-<h3>1. download</h3>
-<p><a href="/enot-dark.tdesktop-theme" download>enot-dark.tdesktop-theme</a> and
-<a href="/enot-light.tdesktop-theme" download>enot-light.tdesktop-theme</a>.</p>
 <h3>2. apply</h3>
 <p>In Telegram Desktop: Settings &gt; Chat settings &gt; Choose from file,
 pick the downloaded theme - the client shows a preview before applying.
@@ -115,26 +135,6 @@ keeps avatars and sender names apart under color blindness. Shadows,
 scrims and selection overlays are alpha channels over specification
 colors, never colors of their own. A theme loaded from a file is
 re-read on every launch, handy while tweaking.</p>
-`,
-  },
-  {
-    app: 'ranger',
-    title: 'ranger',
-    body: `
-<h3>1. download</h3>
-<p><a href="/enot.py" download>enot.py</a> - one file, both themes.</p>
-<h3>2. install</h3>
-<pre class="snippet">mkdir -p ~/.config/ranger/colorschemes
-cp enot.py ~/.config/ranger/colorschemes/</pre>
-<h3>3. enable</h3>
-<pre class="snippet"># ~/.config/ranger/rc.conf
-set colorscheme enot</pre>
-<h3>notes</h3>
-<p>The scheme addresses the terminal palette by index (ANSI 0-15 plus
-the terminal default), so one file serves dark and light and follows
-whatever palette the terminal provides. Pair it with the enot WezTerm
-schemes - or any terminal carrying the enot ANSI 16 set - to get the
-guaranteed palette. Requires ranger &ge; 1.9.3.</p>
 `,
   },
 ];

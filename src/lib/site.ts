@@ -40,6 +40,7 @@ export interface Port {
   kind: string;
   depth: string;
   guarantee: string;
+  install: string;
   outputs: PortOutput[];
 }
 

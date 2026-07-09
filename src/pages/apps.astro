@@ -2,10 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Controls from '../components/Controls.astro';
 import { site, base } from '../lib/site';
-import { INSTALL } from '../data/install';
 
 const accents = site.accents;
-const haveInstall = new Set(INSTALL.map((i) => i.app));
 const ports = site.ports;
 const h1 = 'applications';
 ---
@@ -42,7 +40,7 @@ const h1 = 'applications';
             <td class="num">{p.depth}</td>
             <td><span class={`badge ${p.guarantee === 'ansi' ? 'ansi' : 'full'}`}>{p.guarantee}</span></td>
             <td class="num">{p.outputs.length}</td>
-            <td>{haveInstall.has(p.app) ? <a href={`${base}${p.app}/`}>{p.app}</a> : <span style="color:var(--fg1)">-</span>}</td>
+            <td><a href={`${base}${p.app}/`}>{p.app}</a></td>
           </tr>
         ))}
       </table>

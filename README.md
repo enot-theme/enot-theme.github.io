@@ -9,9 +9,12 @@ lives at the domain root with directory-style URLs).
 - `src/data/site.json` - the data bundle from the enot pipeline (vision
   simulations, metrics, gates, the port registry). Generated, not edited
   by hand; synced in by `make deploy` in the enot repo.
-- `src/data/install.ts`, `src/data/config.ts` - install prose and site
-  config (analytics); the site owns the words, the pipeline owns the
-  numbers.
+- `src/data/install.ts`, `src/data/config.ts` - per-app words (card
+  blurbs, install steps and notes, display order) and site config
+  (analytics). Install pages, download lists, get-cards, the CTA and
+  meta descriptions generate from the port registry in the bundle, so
+  a new port appears everywhere without site edits; this file only
+  refines its words.
 - `src/lib/` - `site.ts` (bundle types and the shared link base),
   `switcher.mjs` (pure theme/vision switcher logic), `metrics.mjs`
   (invariant labels and the flooring helpers the consistency test uses).
