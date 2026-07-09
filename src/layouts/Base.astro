@@ -1,8 +1,7 @@
 ---
 import '../styles/global.css';
 import { site, base } from '../lib/site';
-import { GOATCOUNTER, FAVICON } from '../data/config';
-import Logo from '../components/Logo.astro';
+import { GOATCOUNTER } from '../data/config';
 
 interface Props { title: string; desc: string; page?: string }
 const { title, desc, page = '' } = Astro.props;
@@ -24,7 +23,7 @@ const nav: [string, string][] = [
 ];
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-mode="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -43,7 +42,7 @@ const nav: [string, string][] = [
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={desc} />
   <meta name="twitter:image" content={new URL('og.png', Astro.site).href} />
-  <link rel="icon" href={FAVICON} />
+  <link rel="icon" type="image/png" href={`${base}favicon.png`} />
   <style set:html={`:root { ${initVars} }`}></style>
   {GOATCOUNTER && (
     <script
@@ -55,7 +54,10 @@ const nav: [string, string][] = [
 </head>
 <body>
   <header class="top wrap">
-    <a class="mark" href={base}><Logo size={34} /><b>enot</b></a>
+    <a class="mark" href={base}>
+      <img class="only-dark" src={`${base}mark-dark.webp`} width="34" height="34" alt="" />
+      <img class="only-light" src={`${base}mark-light.webp`} width="34" height="34" alt="" />
+      <b>enot</b></a>
     <nav>{nav.map(([h, t]) => <a href={`${base}${h}`}>{t}</a>)}</nav>
   </header>
   <slot />
@@ -77,6 +79,7 @@ const nav: [string, string][] = [
     let state = initialState(env, visionData);
 
     function apply() {
+      document.documentElement.dataset.mode = state.mode;
       const root = document.documentElement.style;
       for (const [name, value] of paletteVars(visionData, state)) root.setProperty(name, value);
       for (const b of document.querySelectorAll<HTMLElement>('[data-mode]'))

@@ -10,17 +10,19 @@ lives at the domain root with directory-style URLs).
   simulations, metrics, gates, the port registry). Generated, not edited
   by hand; synced in by `make deploy` in the enot repo.
 - `src/data/install.ts`, `src/data/config.ts` - install prose and site
-  config (analytics, favicon); the site owns the words, the pipeline owns
-  the numbers.
+  config (analytics); the site owns the words, the pipeline owns the
+  numbers.
 - `src/lib/` - `site.ts` (bundle types and the shared link base),
   `switcher.mjs` (pure theme/vision switcher logic), `metrics.mjs`
-  (invariant labels and the flooring helpers the consistency test uses),
-  `logo.mjs` (the raccoon mark: inline logo, favicon and og share it).
+  (invariant labels and the flooring helpers the consistency test uses).
+- `src/assets/mascot/` - the mascot originals (anime raccoon, dark and
+  light); everything mascot-derived in `public/` (hero art, header mark,
+  favicon, og card) is regenerated from them by `scripts/make-mascot.mjs`
+  (`npm run mascot`).
 - `src/layouts`, `src/components`, `src/pages`, `src/styles` - the Astro
   site. `/apps/` renders the coverage matrix from the port registry.
 - `public/` - the downloadable scheme files, colors.json and llms*.txt,
-  synced in from the pipeline.
-- `scripts/make-og.mjs` - regenerates `public/og.png` (`npm run og`).
+  synced in from the pipeline, plus the generated mascot assets.
 
 ## Build and deploy
 

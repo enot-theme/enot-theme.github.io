@@ -25,8 +25,12 @@ header.top {
   padding-block: 18px; flex-wrap: wrap;
 }
 .mark { display: flex; align-items: center; gap: 10px; color: var(--fg0); }
-.mark svg { display: block; }
+.mark img { display: block; border-radius: 50%; }
 .mark b { font-size: 18px; font-weight: 600; letter-spacing: .08em; }
+
+/* the mode switcher stamps data-mode on <html>; art swaps with the theme */
+html[data-mode="dark"] .only-light { display: none; }
+html[data-mode="light"] .only-dark { display: none; }
 nav { display: flex; gap: 16px; flex-wrap: wrap; margin-left: auto; }
 nav a { color: var(--fg1); font-size: 13px; }
 
@@ -49,6 +53,22 @@ nav a { color: var(--fg1); font-size: 13px; }
 }
 
 .hero { padding-block: 30px 10px; }
+.hero-grid {
+  display: grid; grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 36px; align-items: center;
+}
+.hero-art {
+  width: 100%; height: auto; display: block;
+  border-radius: 18px; border: 1px solid var(--bg3);
+}
+@media (max-width: 760px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .hero-art { max-width: 240px; margin-top: 10px; }
+}
+.lost-art {
+  width: 200px; height: auto; display: block;
+  border-radius: 50%; border: 1px solid var(--bg3); margin-bottom: 22px;
+}
 .hero h1 {
   font-size: clamp(40px, 7vw, 64px); font-weight: 700;
   letter-spacing: .04em; line-height: 1.1;

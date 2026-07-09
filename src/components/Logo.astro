@@ -1,7 +1,0 @@
----
-import { logoSvg } from '../lib/logo.mjs';
-
-interface Props { size?: number }
-const { size = 34 } = Astro.props;
----
-<Fragment set:html={logoSvg(size, 'currentColor', 'var(--bg0)')} />

@@ -48,19 +48,25 @@ const desc = 'Warm gruvbox-family looks, built in CIELAB, optimized so every pai
 ---
 <Base title={title} desc={desc}>
   <div class="hero wrap">
-    <h1>enot</h1>
-    <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
-    <p class="tagline">An earthy colorscheme that survives color blindness.</p>
-    <p class="sub">Warm gruvbox-family looks, built in CIELAB and optimized so
-    every pair of colors stays apart under protanopia and deuteranopia -
-    the red-green vision deficiencies that affect about 8% of men.
-    Dark and light. No hand-picked colors: everything is generated,
-    optimized and regression-checked.</p>
-    <div class="cta">
-      <a class="btn" href={`${base}vim/`}>Get it for vim</a>
-      <a class="btn alt" href={`${base}wezterm/`}>WezTerm</a>
-      <a class="btn alt" href={`${base}mc/`}>mc</a>
-      <a class="btn alt" href={`${base}ranger/`}>ranger</a>
+    <div class="hero-grid">
+      <div>
+        <h1>enot</h1>
+        <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
+        <p class="tagline">An earthy colorscheme that survives color blindness.</p>
+        <p class="sub">Warm gruvbox-family looks, built in CIELAB and optimized so
+        every pair of colors stays apart under protanopia and deuteranopia -
+        the red-green vision deficiencies that affect about 8% of men.
+        Dark and light. No hand-picked colors: everything is generated,
+        optimized and regression-checked.</p>
+        <div class="cta">
+          <a class="btn" href={`${base}vim/`}>Get it for vim</a>
+          <a class="btn alt" href={`${base}wezterm/`}>WezTerm</a>
+          <a class="btn alt" href={`${base}mc/`}>mc</a>
+          <a class="btn alt" href={`${base}ranger/`}>ranger</a>
+        </div>
+      </div>
+      <img class="hero-art only-dark" src={`${base}mascot-dark.webp`} width="640" height="640" alt="the enot mascot: an anime raccoon face in the theme colors" />
+      <img class="hero-art only-light" src={`${base}mascot-light.webp`} width="640" height="640" alt="the enot mascot: an anime raccoon face in the theme colors" />
     </div>
     <Controls />
     <Editor />

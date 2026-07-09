@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "og": "node scripts/make-og.mjs",
+    "mascot": "node scripts/make-mascot.mjs",
     "test": "astro build && node --test"
   },
   "dependencies": {
