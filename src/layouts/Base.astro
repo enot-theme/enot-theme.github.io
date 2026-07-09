@@ -54,10 +54,10 @@ const nav: [string, string][] = [
 </head>
 <body>
   <header class="top wrap">
-    <a class="mark" href={base}>
-      <img class="only-dark" src={`${base}mark-dark.webp`} width="34" height="34" alt="" />
-      <img class="only-light" src={`${base}mark-light.webp`} width="34" height="34" alt="" />
-      <b>enot</b></a>
+    <a class="mark" href={base} aria-label="enot">
+      <img class="only-dark" src={`${base}mark-dark.webp`} width="38" height="38" alt="" />
+      <img class="only-light" src={`${base}mark-light.webp`} width="38" height="38" alt="" />
+    </a>
     <nav>{nav.map(([h, t]) => <a href={`${base}${h}`}>{t}</a>)}</nav>
   </header>
   <slot />

@@ -24,9 +24,8 @@ header.top {
   display: flex; align-items: center; gap: 18px;
   padding-block: 18px; flex-wrap: wrap;
 }
-.mark { display: flex; align-items: center; gap: 10px; color: var(--fg0); }
+.mark { display: flex; align-items: center; }
 .mark img { display: block; border-radius: 50%; }
-.mark b { font-size: 18px; font-weight: 600; letter-spacing: .08em; }
 
 /* the mode switcher stamps data-mode on <html>; art swaps with the theme */
 html[data-mode="dark"] .only-light { display: none; }

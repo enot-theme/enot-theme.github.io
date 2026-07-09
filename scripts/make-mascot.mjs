@@ -4,7 +4,7 @@
 // palette change:
 //
 // - mascot-{dark,light}.webp - hero and 404 art, 640px;
-// - mark-{dark,light}.webp - the header mark, 68px (34 css px at 2x);
+// - mark-{dark,light}.webp - the header mark, 80px (38 css px at 2x);
 // - favicon.png - the dark mascot in a 64px circle with alpha;
 // - og.png - the 1200x630 social-share card: mascot, wordmark, accent bars.
 import sharp from 'sharp';
@@ -38,7 +38,7 @@ for (const mode of ['dark', 'light']) {
   bgs[mode] = await baked(srcs[mode]);
   (await square(srcs[mode], bgs[mode], 640))
     .webp({ quality: 82 }).toFile(root(`public/mascot-${mode}.webp`));
-  (await square(srcs[mode], bgs[mode], 68))
+  (await square(srcs[mode], bgs[mode], 80))
     .webp({ quality: 82 }).toFile(root(`public/mark-${mode}.webp`));
 }
 
