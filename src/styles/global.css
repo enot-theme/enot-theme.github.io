@@ -70,7 +70,13 @@ nav a[aria-current="page"] { color: var(--fg0); }
   border-radius: 50%; border: 1px solid var(--bg3); margin-bottom: 22px;
 }
 .hero h1 {
-  font-size: clamp(40px, 7vw, 64px); font-weight: 700;
+  /* --h1ch is the title's character count, stamped inline per page.
+     The face is monospace (advance <= 0.6025em) with .04em tracking,
+     so capping at wrap-width / chars / 0.68 keeps every h1 on one
+     line at any viewport, scrollbar slack included. */
+  font-size: min(clamp(40px, 7vw, 64px),
+    calc((min(100vw, 980px) - 48px) / var(--h1ch, 4) / 0.68));
+  font-weight: 700;
   letter-spacing: .04em; line-height: 1.1;
 }
 .tail { display: flex; gap: 6px; margin: 14px 0 22px; max-width: 420px; }

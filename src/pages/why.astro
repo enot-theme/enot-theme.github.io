@@ -4,13 +4,14 @@ import Controls from '../components/Controls.astro';
 import { site, base } from '../lib/site';
 
 const accents = site.accents;
+const h1 = 'most warm themes collapse';
 ---
 <Base
   title="enot - why most warm themes collapse"
   desc="Dichromacy folds red, orange, yellow and green into one ochre band. Compare gruvbox accents against enot's, rendered live through simulated protanopia and deuteranopia."
   page="why/">
   <div class="hero wrap">
-    <h1>most warm themes collapse</h1>
+    <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
     <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
     <p class="tagline">Warm themes encode meaning almost purely by hue.</p>
     <p class="sub">Dichromacy projects the color plane onto a single axis,

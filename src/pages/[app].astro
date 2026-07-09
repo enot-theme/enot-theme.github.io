@@ -11,10 +11,11 @@ export function getStaticPaths() {
 
 const { title, body } = Astro.props;
 const accents = site.accents;
+const h1 = `enot for ${title}`;
 ---
 <Base title={`enot for ${title}`} desc={`Install the enot colorscheme in ${title}.`} page={`${Astro.params.app}/`}>
   <div class="hero wrap">
-    <h1>enot for {title}</h1>
+    <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
     <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
     <Controls />
     <Editor />

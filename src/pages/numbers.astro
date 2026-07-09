@@ -30,13 +30,14 @@ function invTable(depth: string): string {
 }
 
 const drift = ['dark', 'light'].map((m) => metrics[m]['256'].drift_max).join(' / ');
+const h1 = 'guarantees, not vibes';
 ---
 <Base
   title="enot - guarantees, not vibes"
   desc="Every guarantee is computed from the spec and enforced by a regression gate: minimum pairwise CIEDE2000 across simulated visions, WCAG contrast, three color depths."
   page="numbers/">
   <div class="hero wrap">
-    <h1>guarantees, not vibes</h1>
+    <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
     <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
     <p class="tagline">Every value on this page is computed from the spec
     and enforced by a regression gate.</p>

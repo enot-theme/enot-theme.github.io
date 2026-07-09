@@ -4,13 +4,14 @@ import Controls from '../components/Controls.astro';
 import { site, base } from '../lib/site';
 
 const accents = site.accents;
+const h1 = 'method';
 ---
 <Base
   title="enot - method"
   desc="How the palette is built: fixed CIELAB lightness steps, gruvbox hue constraints, simulated dichromacy, a max-min CIEDE2000 optimizer and a regression gate."
   page="method/">
   <div class="hero wrap">
-    <h1>method</h1>
+    <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
     <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
     <p class="tagline">How the palette is built and kept honest.</p>
     <p class="sub">No hand-picked colors: the earthy look is a constraint

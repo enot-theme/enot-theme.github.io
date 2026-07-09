@@ -4,13 +4,14 @@ import Controls from '../components/Controls.astro';
 import { site, base } from '../lib/site';
 
 const accents = site.accents;
+const h1 = 'get it';
 ---
 <Base
   title="enot - get it"
   desc="Install the enot colorscheme: vim/neovim, WezTerm, Midnight Commander and ranger - or generate a port for your app from the same spec."
   page="get/">
   <div class="hero wrap">
-    <h1>get it</h1>
+    <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
     <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
     <p class="tagline">Every port is generated from the same spec.</p>
     <p class="sub">Pick an application for the install steps; the full

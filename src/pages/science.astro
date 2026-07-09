@@ -4,6 +4,7 @@ import Controls from '../components/Controls.astro';
 import { site, base } from '../lib/site';
 
 const accents = site.accents;
+const h1 = 'standing on published work';
 
 const refs: [string, string][] = [
   ['Sharma, Wu, Dalal. The CIEDE2000 color-difference formula: implementation notes. Color Research and Application 30(1), 2005.', 'https://doi.org/10.1002/col.20070'],
@@ -20,7 +21,7 @@ const refs: [string, string][] = [
   desc="The color math behind enot is not invented here: CIEDE2000, the Brettel and Vienot dichromacy simulations, and published guidance on color-blind-safe design."
   page="science/">
   <div class="hero wrap">
-    <h1>standing on published work</h1>
+    <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
     <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
     <p class="tagline">The color math is not invented here.</p>
     <p class="sub">The distance formula, the dichromacy simulations and

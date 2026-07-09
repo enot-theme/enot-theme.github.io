@@ -41,8 +41,9 @@ The scheme files and data bundle are produced by the enot pipeline:
   page reading a dropped field fails the build.
 - `npm test` - builds, then runs the `node:test` suite: bundle
   consistency (gates hold, advertised numbers are floored, not rounded
-  up), the switcher logic and that every built link, download and nav
-  anchor resolves.
+  up), the switcher logic, that every built link, download and nav
+  anchor resolves, and that every h1 stamps its character count for
+  the one-line font-size cap.
 
 The deploy workflow runs check and test before building; either failing
 blocks the deploy.

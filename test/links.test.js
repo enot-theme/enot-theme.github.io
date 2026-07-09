@@ -71,6 +71,21 @@ test('in-page nav anchors have a target on their page', () => {
   }
 });
 
+// The one-line-h1 cap in global.css divides the wrap width by --h1ch,
+// the title's character count stamped inline. A stale count reintroduces
+// wrapping (too low) or shrinks the title for nothing (too high).
+test('every h1 declares --h1ch equal to its text length', () => {
+  for (const file of htmlFiles()) {
+    const html = readFileSync(path.join(dist, file), 'utf8');
+    const h1s = [...html.matchAll(/<h1([^>]*)>([^<]*)<\/h1>/g)];
+    assert.ok(h1s.length === 1, `${file}: expected exactly one plain-text h1`);
+    for (const [, attrs, text] of h1s) {
+      const ch = attrs.match(/--h1ch:\s*(\d+)/)?.[1];
+      assert.equal(Number(ch), text.length, `${file}: h1 "${text}"`);
+    }
+  }
+});
+
 test('llms.txt links point at built artifacts', () => {
   const llms = readFileSync(new URL('../public/llms.txt', import.meta.url), 'utf8');
   const internal = [...llms.matchAll(/\]\((https?:\/\/[^)]+)\)/g)]

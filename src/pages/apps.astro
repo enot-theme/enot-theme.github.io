@@ -7,13 +7,14 @@ import { INSTALL } from '../data/install';
 const accents = site.accents;
 const haveInstall = new Set(INSTALL.map((i) => i.app));
 const ports = site.ports;
+const h1 = 'applications';
 ---
 <Base
   title="enot - applications and coverage"
   desc="Every application enot ships a theme for, at which color depths, with which guarantee - generated from one spec and checked on every build."
   page="apps/">
   <div class="hero wrap">
-    <h1>applications</h1>
+    <h1 style={`--h1ch:${h1.length}`}>{h1}</h1>
     <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
     <p class="tagline">One spec, many ports - and a way to see exactly what is covered.</p>
     <p class="sub">Every row is generated from <code>ports/registry.json</code>,
