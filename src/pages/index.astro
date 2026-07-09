@@ -1,0 +1,196 @@
+---
+import Base from '../layouts/Base.astro';
+import Controls from '../components/Controls.astro';
+import Editor from '../components/Editor.astro';
+import site from '../data/site.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const accents = site.accents as string[];
+const dark = site.vision.enot.dark.normal as Record<string, string>;
+const metrics = site.metrics as Record<string, any>;
+const num = site.numbers;
+
+const INV_LABELS: Record<string, string> = {
+  accents: 'min pairwise &Delta;E00 across the 7 accents, worst of normal / protanopia / deuteranopia',
+  ansi16: 'min pairwise &Delta;E00 across all 16 ANSI colors',
+  tints: 'min pairwise &Delta;E00 across the 4 diff backgrounds',
+  contrast: 'min WCAG contrast over every text-on-background pair of the depth',
+  guard_accents: 'min &Delta;E00 from accents to text and comment',
+  guard_ansi_normal: 'the same guard for the normal ANSI tier',
+  guard_ansi_bright: 'the same guard for the bright ANSI tier',
+  red_chroma: 'chroma of red - diagnostics stay salient',
+  ansi_tier_gap: 'lightness gap between ANSI tiers (the bright tier is darker in the light theme)',
+};
+
+function invTable(depth: string): string {
+  const gates: Record<string, Record<string, number>> = {};
+  for (const g of site.gates) {
+    if (g.depth === depth) (gates[g.metric] ??= {})[g.mode] = g.threshold;
+  }
+  const rows = Object.entries(gates).map(([metric, byMode]) => {
+    const gate = Object.entries(byMode)
+      .map(([mode, thr]) => `&ge; ${thr}` + (mode === '*' ? '' : ` (${mode})`))
+      .join(' / ');
+    const cells = ['dark', 'light']
+      .map((m) => `<td class="num">${metrics[m][depth][metric]}</td>`).join('');
+    return `<tr><td>${INV_LABELS[metric]}</td><td class="num">${gate}</td>${cells}</tr>`;
+  }).join('');
+  return `<div class="invwrap"><table class="inv"><tr><th>invariant</th><th>gate</th><th>dark</th><th>light</th></tr>${rows}</table></div>`;
+}
+
+const drift = ['dark', 'light'].map((m) => metrics[m]['256'].drift_max).join(' / ');
+const ansi16Min = Math.min(...['dark', 'light'].map((m) => metrics[m]['16M'].ansi16));
+
+const refs: [string, string][] = [
+  ['Sharma, Wu, Dalal. The CIEDE2000 color-difference formula: implementation notes. Color Research and Application 30(1), 2005.', 'https://doi.org/10.1002/col.20070'],
+  ['Brettel, Vienot, Mollon. Computerized simulation of color appearance for dichromats. JOSA A 14(10), 1997.', 'https://doi.org/10.1364/JOSAA.14.002647'],
+  ['Vienot, Brettel, Mollon. Digital video colourmaps for checking the legibility of displays by dichromats. Color Research and Application 24(4), 1999.', 'https://doi.org/10.1002/(SICI)1520-6378(199908)24:4%3C243::AID-COL5%3E3.0.CO;2-3'],
+  ['Burrus. Review of open source color blindness simulations. 2021.', 'https://daltonlens.org/opensource-cvd-simulation/'],
+  ['Wong. Points of view: color blindness. Nature Methods 8, 441, 2011.', 'https://doi.org/10.1038/nmeth.1618'],
+  ['Petroff. Accessible color sequences for data visualization. 2021.', 'https://arxiv.org/abs/2107.02270'],
+  ['Piepenbrock, Mayr, Buchner. Positive display polarity is particularly advantageous for small character sizes. Human Factors 56(5), 2014.', 'https://doi.org/10.1177/0018720813515509'],
+];
+
+const title = 'enot - an earthy colorscheme that survives color blindness';
+const desc = 'Warm gruvbox-family looks, built in CIELAB, optimized so every pair of colors stays distinguishable under protanopia and deuteranopia. Dark and light. vim, WezTerm, Midnight Commander and ranger.';
+---
+<Base title={title} desc={desc}>
+  <div class="hero wrap">
+    <h1>enot</h1>
+    <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
+    <p class="tagline">An earthy colorscheme that survives color blindness.</p>
+    <p class="sub">Warm gruvbox-family looks, built in CIELAB and optimized so
+    every pair of colors stays apart under protanopia and deuteranopia -
+    the red-green vision deficiencies that affect about 8% of men.
+    Dark and light. No hand-picked colors: everything is generated,
+    optimized and regression-checked.</p>
+    <div class="cta">
+      <a class="btn" href={`${base}vim.html`}>Get it for vim</a>
+      <a class="btn alt" href={`${base}wezterm.html`}>WezTerm</a>
+      <a class="btn alt" href={`${base}mc.html`}>mc</a>
+      <a class="btn alt" href={`${base}ranger.html`}>ranger</a>
+    </div>
+    <Controls />
+    <Editor />
+    <div class="strip">
+      {accents.map((r) => (
+        <button class="sw" data-hex={dark[r]} title={r}><i style={`background:var(--${r})`}></i>{dark[r]}</button>
+      ))}
+    </div>
+    <p class="caption">Swatches and the editor are rendered through the
+    selected vision; the hex values are the real colors - click to copy.</p>
+  </div>
+
+  <section id="why"><div class="wrap">
+    <h2>most warm themes collapse</h2>
+    <p class="lead">Warm themes encode meaning almost purely by hue.
+    Dichromacy projects the color plane onto a single axis, folding red,
+    orange, yellow and green into one ochre band. Switch the vision above
+    to deuteranopia and compare:</p>
+    <div class="compare">
+      <div><h3>gruvbox accents</h3>
+        <div class="strip small">{[0, 1, 2, 3, 4, 5, 6].map((i) => <span class="sw"><i style={`background:var(--gruv${i})`}></i></span>)}</div>
+      </div>
+      <div><h3>enot accents</h3>
+        <div class="strip small">{accents.map((r) => <span class="sw"><i style={`background:var(--${r})`}></i></span>)}</div>
+      </div>
+    </div>
+    <p class="caption">enot's optimizer maximizes the minimum pairwise
+    CIEDE2000 distance across normal vision, protanopia and deuteranopia,
+    and spreads colors along the lightness axis - the one axis dichromacy
+    never touches. The colors cannot collapse.</p>
+  </div></section>
+
+  <section id="numbers"><div class="wrap">
+    <h2>guarantees, not vibes</h2>
+    <p class="lead">Every value below is computed from the spec and
+    enforced by a regression gate: the build fails if any of them drops.
+    Three color depths, each with its own testable invariants.</p>
+    <div class="cards">
+      <div class="card"><b set:html={`&Delta;E00 &ge; ${num.accentsMin}`}></b><span>between any two
+      syntax accents, worst case across the three simulated visions</span></div>
+      <div class="card"><b set:html={`&Delta;E00 &ge; ${num.ansiMin}`}></b><span>same guarantee
+      for all 16 ANSI terminal colors, both tiers</span></div>
+      <div class="card"><b>&ge; 4.5:1</b><span>WCAG contrast of every accent
+      against the background, at every depth</span></div>
+      <div class="card"><b>3 depths</b><span>true color, xterm-256 and
+      ANSI 16, all derived from one spec: colors.json</span></div>
+    </div>
+    <h3 class="invh">true color - 16M</h3>
+    <Fragment set:html={invTable('16M')} />
+    <h3 class="invh">xterm-256</h3>
+    <p class="lead">The 256-color depth is not naive quantization: the
+    xterm cube is so sparse in the muted earthy region that
+    nearest-color mapping collapses roles to &Delta;E00 = 0. Instead the same
+    max-min optimizer runs over the xterm grid, anchored to the
+    true-color values (max drift {drift} &Delta;E00). The light theme's
+    minimum is the physical ceiling of the grid at 4.5:1 contrast -
+    the true-color variants carry the full guarantee.</p>
+    <Fragment set:html={invTable('256')} />
+    <h3 class="invh">16 - ANSI</h3>
+    <p class="lead">The 16-color depth is the ANSI palette itself,
+    delivered as true color by the terminal scheme and consumed by index
+    (the ranger colorscheme addresses slots 0-15). Its guarantees are the
+    ANSI rows of the 16M table: minimum pairwise &Delta;E00 of {ansi16Min},
+    disjoint lightness tiers, contrast against the background.</p>
+    <p class="caption">The whole spec is data:
+    <a href={`${base}colors.json`} download>colors.json</a> - roles &times; depths
+    &times; themes with these measured metrics embedded; the regression
+    gate (check.py) fails the build if any number above drops, and every
+    color literal in every generated theme must belong to the spec.</p>
+    <p class="caption" style="margin-top:14px">Tritanopia (about 0.01% of the
+    population) is simulated and reported but not a hard constraint.</p>
+  </div></section>
+
+  <section id="method"><div class="wrap">
+    <h2>method</h2>
+    <ol class="method">
+      <li>backgrounds and text sit on fixed CIELAB lightness steps;
+      accents are optimization variables;</li>
+      <li>accents are confined to gruvbox hue sectors and a lightness
+      corridor, so the earthy character is a constraint, not an accident;</li>
+      <li>dichromacy is simulated in linear sRGB: Vienot 1999 for protan
+      and deutan, Brettel 1997 for tritan;</li>
+      <li>an optimizer maximizes the minimum pairwise CIEDE2000 across
+      visions: farthest-point seeding, coordinate ascent, multi-start;</li>
+      <li>an aesthetic pass pulls every color back toward its gruvbox
+      anchor while the guarantee holds;</li>
+      <li>a regression gate re-checks all of it on every build.</li>
+    </ol>
+  </div></section>
+
+  <section id="science"><div class="wrap">
+    <h2>standing on published work</h2>
+    <ul class="refs">
+      {refs.map(([t, u]) => <li>{t} <a href={u}>{u.split('//')[1].split('/')[0]}</a></li>)}
+    </ul>
+  </div></section>
+
+  <section id="get"><div class="wrap">
+    <h2>get it</h2>
+    <div class="apps">
+      <a class="app" href={`${base}vim.html`}><b>vim / neovim</b>
+      <span>one file, both themes, true-color with a computed 256-color
+      fallback, terminal palettes included</span></a>
+      <a class="app" href={`${base}wezterm.html`}><b>WezTerm</b>
+      <span>two TOML schemes, dark and light, with the optimized
+      ANSI 16 palette</span></a>
+      <a class="app" href={`${base}mc.html`}><b>Midnight Commander</b>
+      <span>four skins: dark and light, true color plus an xterm-256
+      fallback solved on the grid</span></a>
+      <a class="app" href={`${base}ranger.html`}><b>ranger</b>
+      <span>one colorscheme for both themes, driven by the terminal
+      ANSI palette</span></a>
+      <a class="app ghost" href={`${base}apps.html`}><b>your app next</b>
+      <span>the palette is data - ports are generated, not hand-made.
+      See the coverage matrix.</span></a>
+    </div>
+  </div></section>
+
+  <footer><div class="wrap">
+    <span>enot is the Russian word for raccoon: grey fur, a high-contrast
+    mask - neutral backgrounds, distinguishable accents. Read it backwards:
+    tone.</span>
+    <span>Generated from colors.json. No hand-picked colors.</span>
+  </div></footer>
+</Base>

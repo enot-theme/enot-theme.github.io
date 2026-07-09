@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import Controls from '../components/Controls.astro';
+import site from '../data/site.json';
+import { INSTALL } from '../data/install';
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const accents = site.accents as string[];
+const haveInstall = new Set(INSTALL.map((i) => i.app));
+const ports = site.ports as any[];
+
+const KIND_LABEL: Record<string, string> = {
+  template: 'template', module: 'module', static: 'static',
+};
+---
+<Base
+  title="enot - applications and coverage"
+  desc="Every application enot ships a theme for, at which color depths, with which guarantee - generated from one spec and checked on every build."
+  page="apps.html">
+  <div class="hero wrap">
+    <h1>applications</h1>
+    <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
+    <p class="tagline">One spec, many ports - and a way to see exactly what is covered.</p>
+    <p class="sub">Every row is generated from <code>ports/registry.json</code>,
+    written by the build engine. A port declares its output files and the
+    depth it reaches; the regression gate then checks that every color in
+    every one of those files belongs to the spec. Coverage is not a claim
+    on this page - it is the manifest the build produces.</p>
+    <Controls />
+  </div>
+
+  <section><div class="wrap">
+    <h2>coverage matrix</h2>
+    <p class="lead">Guarantee: <span class="badge full">full</span> carries
+    the three-depth spec (true color, xterm-256, ANSI 16) with every
+    invariant; <span class="badge ansi">ansi</span> rides the terminal's
+    ANSI 16 palette, so its guarantee is whatever terminal scheme supplies
+    those 16 colors.</p>
+    <div class="invwrap">
+      <table class="inv">
+        <tr><th>application</th><th>kind</th><th>depths</th><th>guarantee</th><th>files</th><th>install</th></tr>
+        {ports.map((p) => (
+          <tr>
+            <td>{p.name}<br /><span style="color:var(--comment);font-size:11px">{p.category}</span></td>
+            <td>{KIND_LABEL[p.kind] ?? p.kind}</td>
+            <td class="num">{p.depth}</td>
+            <td><span class={`badge ${p.guarantee === 'ansi' ? 'ansi' : 'full'}`}>{p.guarantee}</span></td>
+            <td class="num">{p.outputs.length}</td>
+            <td>{haveInstall.has(p.app) ? <a href={`${base}${p.app}.html`}>{p.app}.html</a> : <span style="color:var(--comment)">-</span>}</td>
+          </tr>
+        ))}
+      </table>
+    </div>
+    <p class="caption">{ports.length} applications, {ports.reduce((n, p) => n + p.outputs.length, 0)} generated
+    artifacts, all reproduced from <a href={`${base}colors.json`} download>colors.json</a> on every build.</p>
+  </div></section>
+
+  <section><div class="wrap">
+    <h2>add a port</h2>
+    <p class="lead">A new application is not a new program. The engine
+    reads one spec and renders every port under <code>ports/</code>; a
+    port is a directory with a <code>port.json</code> manifest of one of
+    three kinds.</p>
+    <ol class="method">
+      <li><b>template</b> - a <code>${'{'}var{'}'}</code> file rendered per
+      theme, no code. This is the path for the long tail of simple
+      key=value color formats: name the roles, get an artifact.</li>
+      <li><b>module</b> - a small <code>render.py</code> for formats whose
+      output needs logic (attribute handling, section inheritance).</li>
+      <li><b>static</b> - a file copied verbatim, for schemes that address
+      the terminal palette by index.</li>
+    </ol>
+    <p class="lead">Whichever kind, the manifest declares the output files
+    and the build checks their colors against the spec - so a new port
+    arrives already inside the guarantee, and already on this matrix.</p>
+    <p class="caption"><a href="https://github.com/enot-theme/enot">enot-theme/enot</a>
+    is the pipeline and the ports; <a href="https://github.com/enot-theme/enot/blob/main/ports">ports/</a>
+    is where a new one lands.</p>
+  </div></section>
+
+  <footer><div class="wrap">
+    <span><a href={`${base}index.html`}>&larr; enot</a> - an earthy colorscheme that survives color blindness.</span>
+  </div></footer>
+</Base>

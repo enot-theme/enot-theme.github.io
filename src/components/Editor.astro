@@ -1,0 +1,22 @@
+---
+// A static editor mock; every token uses a palette variable so it
+// re-renders through the vision switcher like the rest of the page.
+const EDITOR = '<div class="editor"><pre>' +
+  '<span class="line"><span class="ln">1</span><span class="tok-cm"># accents live in CIELAB, not in guesswork</span></span>' +
+  '<span class="line"><span class="ln">2</span><span class="tok-k">from</span> math <span class="tok-k">import</span> cos, sin, radians</span>' +
+  '<span class="line"><span class="ln">3</span></span>' +
+  '<span class="line"><span class="ln">4</span><span class="tok-k">def</span> <span class="search">lch_to_lab</span>(l, c, h):</span>' +
+  '<span class="line"><span class="ln">5</span>    <span class="tok-s">&quot;&quot;&quot;Cylindrical LCh to rectangular Lab.&quot;&quot;&quot;</span></span>' +
+  '<span class="line"><span class="ln">6</span>    hr = <span class="tok-c">radians</span>(h)</span>' +
+  '<span class="line"><span class="ln">7</span>    <span class="tok-k">return</span> l, <span class="vis">c * <span class="tok-c">cos</span>(hr)</span>, c * <span class="tok-c">sin</span>(hr)</span>' +
+  '<span class="line"><span class="ln">8</span></span>' +
+  '<span class="line"><span class="ln">9</span><span class="tok-y">GUARDS</span> = {<span class="tok-s">&quot;contrast&quot;</span>: <span class="tok-n">4.5</span>, <span class="tok-s">&quot;delta_e&quot;</span>: <span class="tok-n">8.0</span>}</span>' +
+  '<span class="line"><span class="ln">10</span></span>' +
+  '<span class="line"><span class="ln">11</span><span class="tok-k">for</span> name, floor <span class="tok-k">in</span> GUARDS.<span class="tok-c">items</span>():</span>' +
+  '<span class="line cur"><span class="ln">12</span>    ok = <span class="tok-c">holds</span>(name, <span class="search">lch_to_lab</span>(<span class="tok-n">70.0</span>, <span class="tok-n">26.0</span>, <span class="cursor">h</span>ue))</span>' +
+  '<span class="line"><span class="ln">13</span>    <span class="tok-b">print</span>(<span class="tok-s">f&quot;{name}: {ok}&quot;</span>)</span>' +
+  '</pre><div class="statusline"><span class="mode">NORMAL</span>' +
+  '<span>palette.py</span><span class="grow"></span><span>utf-8</span>' +
+  '<span>py</span><span class="tail-seg">12:24</span></div></div>';
+---
+<Fragment set:html={EDITOR} />

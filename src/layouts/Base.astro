@@ -1,0 +1,101 @@
+---
+import '../styles/global.css';
+import site from '../data/site.json';
+import { GOATCOUNTER, FAVICON } from '../data/config';
+import Logo from '../components/Logo.astro';
+
+interface Props { title: string; desc: string; page?: string }
+const { title, desc, page = '' } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const canonical = site.baseUrl + page;
+const vision = site.vision as Record<string, any>;
+
+// Server-set initial custom properties (dark, normal vision) so the
+// first paint is correct before the switcher runs.
+const dark = vision.enot.dark.normal as Record<string, string>;
+const gruv = vision.gruvbox.dark.normal as string[];
+let initVars = Object.entries(dark).map(([k, h]) => `--${k}: ${h}`).join('; ');
+initVars += '; ' + gruv.map((h, i) => `--gruv${i}: ${h}`).join('; ');
+
+const nav: [string, string][] = [
+  ['index.html#why', 'why'], ['index.html#numbers', 'numbers'],
+  ['index.html#method', 'method'], ['index.html#science', 'science'],
+  ['apps.html', 'apps'], ['index.html#get', 'get it'],
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={desc} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={desc} />
+  <meta property="og:url" content={canonical} />
+  <link rel="icon" href={FAVICON} />
+  <style set:html={`:root { ${initVars} }`}></style>
+  {GOATCOUNTER && (
+    <script
+      is:inline
+      defer
+      data-goatcounter={`https://${GOATCOUNTER}.goatcounter.com/count`}
+      src="//gc.zgo.at/count.js"></script>
+  )}
+</head>
+<body>
+  <header class="top wrap">
+    <a class="mark" href={`${base}index.html`}><Logo size={34} /><b>enot</b></a>
+    <nav>{nav.map(([h, t]) => <a href={`${base}${h}`}>{t}</a>)}</nav>
+  </header>
+  <slot />
+  <script is:inline define:vars={{ visionData: vision }}>
+    var state = { mode: "dark", vision: "normal" };
+    try {
+      var q = new URLSearchParams(location.search);
+      var saved = localStorage.getItem("enot-mode");
+      if (window.matchMedia("(prefers-color-scheme: light)").matches)
+        state.mode = "light";
+      if (saved === "dark" || saved === "light") state.mode = saved;
+      if (q.get("mode") === "dark" || q.get("mode") === "light")
+        state.mode = q.get("mode");
+      if (visionData.enot.dark[q.get("vision")]) state.vision = q.get("vision");
+    } catch (e) {}
+
+    function apply() {
+      var root = document.documentElement.style;
+      var set = visionData.enot[state.mode][state.vision];
+      Object.keys(set).forEach(function (k) { root.setProperty("--" + k, set[k]); });
+      visionData.gruvbox[state.mode][state.vision].forEach(function (h, i) {
+        root.setProperty("--gruv" + i, h);
+      });
+      document.querySelectorAll("[data-mode]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode));
+      });
+      document.querySelectorAll("[data-vision]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.vision === state.vision));
+      });
+    }
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-mode],[data-vision],[data-hex]");
+      if (!b) return;
+      if (b.dataset.mode) {
+        state.mode = b.dataset.mode;
+        try { localStorage.setItem("enot-mode", state.mode); } catch (e2) {}
+        apply();
+      } else if (b.dataset.vision) {
+        state.vision = b.dataset.vision;
+        apply();
+      } else if (b.dataset.hex && navigator.clipboard) {
+        navigator.clipboard.writeText(b.dataset.hex);
+        var old = b.lastChild.textContent;
+        b.lastChild.textContent = "copied";
+        setTimeout(function () { b.lastChild.textContent = old; }, 900);
+      }
+    });
+    apply();
+  </script>
+</body>
+</html>

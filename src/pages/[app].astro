@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import Controls from '../components/Controls.astro';
+import Editor from '../components/Editor.astro';
+import site from '../data/site.json';
+import { INSTALL } from '../data/install';
+
+export function getStaticPaths() {
+  return INSTALL.map((i) => ({ params: { app: i.app }, props: i }));
+}
+
+const { title, body } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const accents = site.accents as string[];
+---
+<Base title={`enot for ${title}`} desc={`Install the enot colorscheme in ${title}.`} page={`${Astro.params.app}.html`}>
+  <div class="hero wrap">
+    <h1>enot for {title}</h1>
+    <div class="tail" aria-hidden="true">{accents.map((r) => <i style={`background:var(--${r})`}></i>)}</div>
+    <Controls />
+    <Editor />
+  </div>
+  <section><div class="wrap"><div class="steps" set:html={body}></div></div></section>
+  <footer><div class="wrap">
+    <span><a href={`${base}index.html`}>&larr; enot</a> - an earthy colorscheme that survives color blindness.</span>
+  </div></footer>
+</Base>
