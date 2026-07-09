@@ -3,7 +3,7 @@
 > An earthy color scheme for vim, WezTerm, Midnight Commander and
 > ranger: dark and light themes, gruvbox character, built in CIELAB
 > and machine-checked to stay distinguishable under color blindness -
-> minimum pairwise CIEDE2000 of 8.3 between syntax accents and 7.2
+> minimum pairwise CIEDE2000 of 8.2 between syntax accents and 7.2
 > across the 16 ANSI colors, verified against simulated protanopia
 > and deuteranopia.
 

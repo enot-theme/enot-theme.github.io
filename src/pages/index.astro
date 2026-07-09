@@ -3,24 +3,18 @@ import Base from '../layouts/Base.astro';
 import Controls from '../components/Controls.astro';
 import Editor from '../components/Editor.astro';
 import site from '../data/site.json';
+import { INV_LABELS, guarantee } from '../lib/metrics.mjs';
 
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const accents = site.accents as string[];
 const dark = site.vision.enot.dark.normal as Record<string, string>;
 const metrics = site.metrics as Record<string, any>;
-const num = site.numbers;
 
-const INV_LABELS: Record<string, string> = {
-  accents: 'min pairwise &Delta;E00 across the 7 accents, worst of normal / protanopia / deuteranopia',
-  ansi16: 'min pairwise &Delta;E00 across all 16 ANSI colors',
-  tints: 'min pairwise &Delta;E00 across the 4 diff backgrounds',
-  contrast: 'min WCAG contrast over every text-on-background pair of the depth',
-  guard_accents: 'min &Delta;E00 from accents to text and comment',
-  guard_ansi_normal: 'the same guard for the normal ANSI tier',
-  guard_ansi_bright: 'the same guard for the bright ANSI tier',
-  red_chroma: 'chroma of red - diagnostics stay salient',
-  ansi_tier_gap: 'lightness gap between ANSI tiers (the bright tier is darker in the light theme)',
-};
+// Advertised guarantees are floored from the measured metrics, not read
+// from a pre-rounded field: the number under a ">=" must never exceed the
+// worst case shown in the table below.
+const accentsGuarantee = guarantee(metrics, '16M', 'accents');
+const ansiGuarantee = guarantee(metrics, '16M', 'ansi16');
 
 function invTable(depth: string): string {
   const gates: Record<string, Record<string, number>> = {};
@@ -39,7 +33,6 @@ function invTable(depth: string): string {
 }
 
 const drift = ['dark', 'light'].map((m) => metrics[m]['256'].drift_max).join(' / ');
-const ansi16Min = Math.min(...['dark', 'light'].map((m) => metrics[m]['16M'].ansi16));
 
 const refs: [string, string][] = [
   ['Sharma, Wu, Dalal. The CIEDE2000 color-difference formula: implementation notes. Color Research and Application 30(1), 2005.', 'https://doi.org/10.1002/col.20070'],
@@ -107,9 +100,9 @@ const desc = 'Warm gruvbox-family looks, built in CIELAB, optimized so every pai
     enforced by a regression gate: the build fails if any of them drops.
     Three color depths, each with its own testable invariants.</p>
     <div class="cards">
-      <div class="card"><b set:html={`&Delta;E00 &ge; ${num.accentsMin}`}></b><span>between any two
+      <div class="card"><b set:html={`&Delta;E00 &ge; ${accentsGuarantee}`}></b><span>between any two
       syntax accents, worst case across the three simulated visions</span></div>
-      <div class="card"><b set:html={`&Delta;E00 &ge; ${num.ansiMin}`}></b><span>same guarantee
+      <div class="card"><b set:html={`&Delta;E00 &ge; ${ansiGuarantee}`}></b><span>same guarantee
       for all 16 ANSI terminal colors, both tiers</span></div>
       <div class="card"><b>&ge; 4.5:1</b><span>WCAG contrast of every accent
       against the background, at every depth</span></div>
@@ -131,7 +124,7 @@ const desc = 'Warm gruvbox-family looks, built in CIELAB, optimized so every pai
     <p class="lead">The 16-color depth is the ANSI palette itself,
     delivered as true color by the terminal scheme and consumed by index
     (the ranger colorscheme addresses slots 0-15). Its guarantees are the
-    ANSI rows of the 16M table: minimum pairwise &Delta;E00 of {ansi16Min},
+    ANSI rows of the 16M table: minimum pairwise &Delta;E00 of {ansiGuarantee},
     disjoint lightness tiers, contrast against the background.</p>
     <p class="caption">The whole spec is data:
     <a href={`${base}colors.json`} download>colors.json</a> - roles &times; depths
