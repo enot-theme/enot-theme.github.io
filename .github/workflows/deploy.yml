@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       # builds the Astro project (npm ci + astro build) and uploads the
-      # Pages artifact with the configured base path
+      # Pages artifact
       - uses: withastro/action@v3
   deploy:
     needs: build
