@@ -93,6 +93,30 @@ colors, so they read the same under any vision.</p>
 `,
   },
   {
+    app: 'telegram',
+    title: 'Telegram Desktop',
+    body: `
+<h3>1. download</h3>
+<p><a href="/enot-dark.tdesktop-theme" download>enot-dark.tdesktop-theme</a> and
+<a href="/enot-light.tdesktop-theme" download>enot-light.tdesktop-theme</a> -
+plain-text palette files, no archive.</p>
+<h3>2. apply</h3>
+<p>In Telegram Desktop: Settings &gt; Chat settings &gt; Choose from file,
+pick the downloaded theme - the client shows a preview before applying.
+Alternatively send the file to any chat (Saved Messages works) and click
+it there.</p>
+<h3>notes</h3>
+<p>The file is the full palette: 586 entries rendered from the spec, so
+nothing falls back to the stock day colors. Message bubbles ride the
+tinted background roles, the eight userpic slots take the accent set -
+the pairwise &Delta;E00 guarantee is what keeps avatars and sender names
+apart under color blindness. Shadows, scrims and selection overlays are
+alpha channels over specification colors, never colors of their own.
+A theme loaded from a file is re-read on every launch, handy while
+tweaking. No background image is bundled: your wallpaper stays.</p>
+`,
+  },
+  {
     app: 'ranger',
     title: 'ranger',
     body: `
