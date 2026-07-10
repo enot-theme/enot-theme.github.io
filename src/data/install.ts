@@ -100,6 +100,29 @@ same contrast guarantees as the editor text.</p>
 `,
   },
   {
+    app: 'bat',
+    blurb: 'two .tmTheme files, dark and light, with the same scope '
+      + 'mapping as the editors',
+    body: `
+<h3>2. install</h3>
+<pre class="snippet">mkdir -p "$(bat --config-dir)/themes"
+cp enot-dark.tmTheme enot-light.tmTheme "$(bat --config-dir)/themes/"
+bat cache --build</pre>
+<h3>3. enable</h3>
+<pre class="snippet">bat --theme=enot-dark file.py
+# or permanently, in ~/.config/bat/config:
+--theme="enot-dark"</pre>
+<h3>notes</h3>
+<p>bat reads TextMate .tmTheme files only - the newer
+.sublime-color-scheme is not supported - so this port emits that format
+while reusing the enot scope mapping verbatim: keywords red, functions
+green, strings aqua, types yellow, constants purple, comments a muted
+italic. Diff and patch backgrounds are the specification tint roles, so
+added and deleted lines stay apart under any vision. bat names the theme
+after the file, hence enot-dark and enot-light in --list-themes.</p>
+`,
+  },
+  {
     app: 'wezterm',
     blurb: 'two TOML schemes, dark and light, with the optimized '
       + 'ANSI 16 palette',
@@ -133,6 +156,27 @@ config.color_scheme = get_appearance():find('Dark')
 syntax accents: neutral slots spread along the lightness axis, six color
 families in two disjoint lightness tiers, minimum pairwise
 &Delta;E00 of 7.2 across simulated visions.</p>
+`,
+  },
+  {
+    app: 'ohmyzsh',
+    blurb: 'a minimal one-line prompt driven by the terminal '
+      + 'ANSI palette, one file for both themes',
+    body: `
+<h3>2. install</h3>
+<pre class="snippet">cp enot.zsh-theme ~/.oh-my-zsh/custom/themes/</pre>
+<h3>3. enable</h3>
+<pre class="snippet"># ~/.zshrc
+ZSH_THEME="enot"</pre>
+<h3>notes</h3>
+<p>A quiet single-line prompt in the robbyrussell lineage: the current
+directory in blue, the git branch and a dirty marker in yellow and red,
+and a leading arrow that turns from green to red on a non-zero exit
+status - red and green are the enot pair the palette keeps distinguishable
+under protanopia and deuteranopia. Colors are ANSI slots 0-15 taken from
+the terminal, so one file serves both themes; pair it with the enot
+WezTerm schemes, or any terminal carrying the enot ANSI 16 set, for the
+guaranteed palette.</p>
 `,
   },
   {
